@@ -33,9 +33,10 @@ class Game
 
 
 		unsigned int		_nb_players;
-		Player*				_players[NB_MAX_PLAYER];
+		Player*				_players;
 		unsigned int		_nb_enemies;
 		Ennemy*				_enemy_list;
+		unsigned int		_nb_bullet;
 		Bullet*				_bullet_list;
 
 };

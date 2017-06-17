@@ -8,7 +8,7 @@ class Player : public Entity {
 
 public:
 
-	Player(std::string name);
+	Player(void);
 	Player(Player const & src);
 	virtual ~Player();
 
@@ -24,7 +24,6 @@ public:
 		std::string		_name;
 
 	private:
-		Player(void);
 };
 
 std::ostream &		operator<<(std::ostream & o, Player const & rhs);
