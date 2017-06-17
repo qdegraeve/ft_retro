@@ -73,8 +73,16 @@ void				Game::generate_ennemy(void)
 	for (i = 0; i < this->_nb_ennemy; ++i)
 	{
 		new_ennemy = new Ennemy(i);
-		this->_ennemy_list = (Ennemy *)Entity::set_next_at_end(this->_ennemy_list, new_ennemy);
+		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
+}
+
+void				Game::player_shoot(Player const & player)
+{
+	Bullet*			new_bullet;
+
+	new_bullet = new Bullet(player.get_pos_x());
+	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 }
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/

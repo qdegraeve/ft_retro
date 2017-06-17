@@ -145,7 +145,7 @@ void				Entity::set_next(Entity *next)
 	this->_next = next;
 }
 
-Entity*				Entity::set_next_at_end(Entity* list, Entity* to_add)
+Entity*				Entity::set_entity_at_end(Entity* list, Entity* to_add)
 {
 	Entity	*ptr;
 

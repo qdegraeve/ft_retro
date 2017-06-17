@@ -26,6 +26,8 @@ class Game
 		/* Public member functions */
 		void				generate_ennemy(void);
 
+		void				player_shoot(Player const & player);
+
 	protected:
 
 		// checkCollision();
