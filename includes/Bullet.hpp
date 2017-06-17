@@ -4,16 +4,16 @@
 # include <string>
 # include "Entity.hpp"
 
-class Bullet : public Entity {
+class Bullet : public Entity
+{
+	public:
+		Bullet(unsigned int pos_x);
+		Bullet(Bullet const & src);
+		virtual ~Bullet();
 
-public:
-
-	Bullet(void);
-	Bullet(Bullet const & src);
-	virtual ~Bullet();
-
-	Bullet &	operator=(Bullet const & rhs);
-
+	private:
+		Bullet &	operator=(Bullet const & rhs);
+		Bullet(void);
 };
 
 #endif

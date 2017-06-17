@@ -3,39 +3,38 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Ennemy::Ennemy(void) {
-
-	std::cout << "Default constructor called" << std::endl;
+Ennemy::Ennemy(unsigned int pos_x) : Entity("Ennemy",
+											5,		/* life max */
+											10,		/* damage point */
+											pos_x,	/* pos x */
+											0,		/* pos y */
+											'e',	/* character */
+											1)		/* speed */
+{
+	std::cout << "Ennemy constructor called" << std::endl;
 	return ;
 }
 
-Ennemy::Ennemy(Ennemy const & src) {
-
-	std::cout << "Copy constructor called" << std::endl;
+Ennemy::Ennemy(Ennemy const & src) : Entity(src)
+{
+	std::cout << "Ennemy Copy constructor called" << std::endl;
 	*this = src;
-
 	return ;
 }
 
 /*************************     DESTRUCTORS     ********************************/
 
-Ennemy::~Ennemy(void) {
-	std::cout << "Destructor called" << std::endl;
+Ennemy::~Ennemy(void)
+{
+	std::cout << "Ennemy Destructor called" << std::endl;
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/
 
-Ennemy &	Ennemy::operator=(Ennemy const & rhs) {
-
-	std::cout << "Assignation operator called" << std::endl;
-	if (this != &rhs) {
-		this->_pos_x = rhs.get_pos_x();
-		this->_pos_x = rhs.get_pos_y();
-		this->_speed = rhs.get_speed();
-		this->_life = rhs.get_life();
-	}
-	
-	return *this;
+Ennemy &	Ennemy::operator=(Ennemy const & rhs)
+{
+	(void)rhs;
+	return (*this);
 }
 
 /*************************     GETTERS      ***********************************/
