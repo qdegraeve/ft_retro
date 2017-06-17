@@ -11,6 +11,11 @@
 # define COLONNES 10
 #endif
 
+namespace Entity_list
+{
+
+}
+
 class Entity
 {
 	public:
@@ -54,7 +59,7 @@ class Entity
 
 		/* List - Setters */
 		void				set_next(Entity* next);
-		Entity*				move_entity(Entity* list);
+		Entity*				move_entity_list(Entity* list);
 
 		/* List - Functions */
 		static Entity*		set_entity_at_end(Entity* list, Entity* to_add);

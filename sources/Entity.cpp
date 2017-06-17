@@ -154,7 +154,7 @@ void				Entity::set_next(Entity *next)
 
 /*************************    		STATIC		     *************************/
 
-Entity*				Entity::move_entity(Entity* list)
+Entity*				Entity::move_entity_list(Entity* list)
 {
 	Entity			*ptr;
 	Entity			*next;
@@ -168,9 +168,12 @@ Entity*				Entity::move_entity(Entity* list)
 			list = Entity::delete_one_entity_on_list(list, ptr);
 			ptr = next;
 		}
-		ptr->move(0, 1);
-		std::cout << *ptr << std::endl;
-		ptr = ptr->get_next();
+		else
+		{
+			ptr->move(0, 1);
+			std::cout << *ptr << std::endl;
+			ptr = ptr->get_next();
+		}
 	}
 	return (list);
 }

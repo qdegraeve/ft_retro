@@ -91,13 +91,13 @@ void				Game::player_shoot(Player const & player)
 
 void			Game::move_bullets(void)
 {
-	this->_bullet_list = (Bullet *)this->_bullet_list->move_entity(this->_bullet_list);
+	this->_bullet_list = (Bullet *)this->_bullet_list->move_entity_list(this->_bullet_list);
 	return ;
 }
 
 void			Game::move_ennemy(void)
 {
-	this->_ennemy_list = (Ennemy *)this->_ennemy_list->move_entity(this->_ennemy_list);
+	this->_ennemy_list = (Ennemy *)this->_ennemy_list->move_entity_list(this->_ennemy_list);
 	return ;
 }
 

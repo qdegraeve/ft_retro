@@ -30,6 +30,7 @@ class Game
 		void				generate_ennemy(void);
 
 		/* Player functions */
+		void				move_player();
 		void				player_shoot(Player const & player);
 
 		/* Bullets */
