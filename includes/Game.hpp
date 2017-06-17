@@ -40,6 +40,9 @@ class Game
 		/* Ennemy */
 		void				move_ennemy(void);
 
+		/* Ennemy */
+		void				move_player(Player & Player, int x, int y);
+
 		Window const &	_menu;
 		Window const &	_playground;
 

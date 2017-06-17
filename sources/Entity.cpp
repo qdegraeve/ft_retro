@@ -266,7 +266,7 @@ void				Entity::move(int x_move, int y_move)
 
 bool				Entity::_current_position_on_board_is_ok(void)
 {
-	if (this->_pos_y < 0 || this->_pos_x < 0)
+	if (this->_pos_y < 1 || this->_pos_x < 1)
 		return (false);
 	if (this->_pos_y >= _win.get_lines() || this->_pos_x > _win.get_cols())
 		return (false);

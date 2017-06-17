@@ -7,7 +7,7 @@ Ennemy::Ennemy(unsigned int pos_x, Window const &win) : Entity("Ennemy",
 											5,		/* life max */
 											10,		/* damage point */
 											pos_x,	/* pos x */
-											0,		/* pos y */
+											1,		/* pos y */
 											'e',	/* character */
 											1,
 											win)		/* speed */

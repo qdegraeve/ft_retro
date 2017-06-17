@@ -100,16 +100,16 @@ int					Game::start_game(void) {
 			mvwaddch(this->_playground.get_win(), this->_players[0]->get_pos_y(), this->_players[0]->get_pos_x(), ' ');
 			switch(c) {
 				case KEY_UP:
-					this->_players[0]->move(0, 1);
+					this->move_player(*this->_players[0], 0, 1);
 					break;
 				case KEY_DOWN:
-					this->_players[0]->move(0, -1);
+					this->move_player(*this->_players[0], 0, -1);
 					break;
 				case KEY_RIGHT:
-					this->_players[0]->move(-1, 0);
+					this->move_player(*this->_players[0], -1, 0);
 					break;
 				case KEY_LEFT:
-					this->_players[0]->move(1, 0);
+					this->move_player(*this->_players[0], 1, 0);
 					break;
 				case ERR:
 					break;
@@ -146,6 +146,11 @@ void			Game::move_ennemy(void)
 {
 	this->_ennemy_list = (Ennemy *)this->_ennemy_list->move_entity_list(this->_ennemy_list);
 	return ;
+}
+
+void			Game::move_player(Player & player, int x, int y)
+{
+	player.move(x, y);
 }
 
 /*************************     NON MEMBER FUNTIONS     ************************/
