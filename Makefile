@@ -21,7 +21,7 @@ O_DIR = .tmp/
 
 ### TO COMPLETE ###
 
-CORE = main.cpp Entity.cpp Player.cpp Ennemy.cpp Bullet.cpp
+CORE = main.cpp Entity.cpp Player.cpp Ennemy.cpp Bullet.cpp Game.cpp
 SRC_CORE = $(addprefix $(CPP_DIR)/, $(CORE))
 
 ### END ###
