@@ -6,7 +6,7 @@
 /*   By: mressier <mressier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 09:55:04 by mressier          #+#    #+#             */
-/*   Updated: 2017/06/17 10:47:56 by mressier         ###   ########.fr       */
+/*   Updated: 2017/06/17 11:52:09 by mressier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,19 @@
 class Entity
 {
 	public:
-		Entity(std::string type, unsigned int life_max, unsigned int damage_point,
-				unsigned int pos_x, unsigned int pos_y, int speed);			/* constructor by default */
-		Entity(Entity const & src);									/* constructor by copy */
-		~Entity();													/* destructor */
+		Entity(std::string type,
+				unsigned int life_max,
+				unsigned int damage_point,
+				unsigned int pos_x,
+				unsigned int pos_y,
+				int speed);								/* constructor by default */
+		Entity(Entity const & src);						/* constructor by copy */
+		virtual ~Entity();								/* destructor */
 
-		Entity & operator=(Entity const & rhs);						/* overload operator = */
+		Entity & operator=(Entity const & rhs);								/* overload operator = */
+
+
+		void
 
 		void	takeDamage(unsigned int amount) const;
 		void	move() const; //TEMP
@@ -45,3 +52,7 @@ class Entity
 std::ostream &		operator<<(std::ostream & o, Entity const & rhs);
 
 #endif /* ENTITY_HPP */
+
+test() : Entity("bullet", 54)
+
+test2() : Entity("test2", asdsd)
