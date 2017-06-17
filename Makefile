@@ -42,7 +42,7 @@ $(O_DIR)%.o: %.cpp
 	@clang++ $(FLAGS) $(INCLUDES) -o $@ -c $<
 
 $(NAME): $(O_FILES)
-	@clang++ $(FLAGS) -o $(NAME) $(O_FILES)
+	@clang++ $(FLAGS) $(INCLUDES) -o $(NAME) $(O_FILES)
 	@printf "[\033[32;1m Run \033[0m]\033[31;1m $(NAME) \033[0m\\n"
 
 clean:

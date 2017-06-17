@@ -5,7 +5,7 @@
 Game::Game(unsigned int nb_player) : _nb_players(nb_player > NB_MAX_PLAYER ?
 												NB_MAX_PLAYER : nb_player),
 									_players(new Player[this->_nb_players]),
-									_nb_enemy(0), _enemy_list(NULL),
+									_nb_ennemy(0), _ennemy_list(NULL),
 									_nb_bullet(0), _bullet_list(NULL)
 
 {
@@ -21,8 +21,10 @@ Game::Game(Game const & src)
 
 Game::~Game()
 {
-	std::cout << "Game constructor called" << std::endl;
+	std::cout << "Game destructor called" << std::endl;
 	delete [] this->_players;
+	Entity::delete_entity_list((Entity *)this->_ennemy_list);
+	Entity::delete_entity_list((Entity *)this->_bullet_list);
 	return ;
 }
 
@@ -48,13 +50,31 @@ Player&				Game::get_player(unsigned int index) const
 	return (this->_players[index]);
 }
 
+unsigned int		Game::get_nb_ennemy(void) const
+{
+	return (this->_nb_ennemy);
+}
+
+Ennemy*				Game::get_ennemy_list(void) const
+{
+	return (this->_ennemy_list);
+}
+
 /*************************     SETTERS      ***********************************/
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/
 
-void				GenerateEnemy(void)
+void				Game::generate_ennemy(void)
 {
-	return ;
+	Ennemy			*new_ennemy;
+	unsigned int	i;
+
+	this->_nb_ennemy = 5;
+	for (i = 0; i < this->_nb_ennemy; ++i)
+	{
+		new_ennemy = new Ennemy(i);
+		this->_ennemy_list = (Ennemy *)Entity::set_next_at_end(this->_ennemy_list, new_ennemy);
+	}
 }
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
