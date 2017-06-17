@@ -4,15 +4,18 @@
 # include <string>
 # include "Entity.hpp"
 
-class Ennemy : public Entity {
+class Ennemy : public Entity
+{
 
-public:
+	public:
 
-	Ennemy(void);
-	Ennemy(Ennemy const & src);
-	virtual ~Ennemy();
+		Ennemy(void);
+		Ennemy(Ennemy const & src);
+		virtual ~Ennemy();
 
-	Ennemy &	operator=(Ennemy const & rhs);
+	private:
+
+		Ennemy &	operator=(Ennemy const & rhs);
 };
 
 #endif
