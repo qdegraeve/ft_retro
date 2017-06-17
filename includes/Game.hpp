@@ -5,11 +5,12 @@
 #include "Bullet.hpp"
 #include "Ennemy.hpp"
 #include <iostream>
+#include <unistd.h>
 
 #define NB_MAX_PLAYER 1
 #define HEIGHT_MENU 10
 #define WIN_SPACE 2
-#define BEGIN_PG (HEIGHT_MENU + 1)
+#define BEGIN_PG (HEIGHT_MENU + 4)
 
 class Game
 {
@@ -38,6 +39,13 @@ class Game
 		/* Ennemy */
 		void			move_ennemy(void);
 
+		Window const &	_menu;
+		Window const &	_playground;
+
+		/* Play interface */
+		int				start_game(void);
+
+
 	protected:
 
 		// checkCollision();
@@ -54,8 +62,6 @@ class Game
 		Ennemy*				_ennemy_list;
 		unsigned int		_nb_bullet;
 		Bullet*				_bullet_list;
-		Window const &		_menu;
-		Window const &		_playground;
 
 };
 #endif /* GAME_HPP */

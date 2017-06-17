@@ -12,13 +12,11 @@ Bullet::Bullet(unsigned int pos_x, Window const & win) : Entity("Bullet", /* typ
 											-2,		/* speed */
 											win)		/* speed */
 {
-	std::cout << "Bullet constructor called" << std::endl;
 	return ;
 }
 
 Bullet::Bullet(Bullet const & src) : Entity(src)
 {
-	std::cout << "Bullet Copy constructor called" << std::endl;
 	*this = src;
 	return ;
 }

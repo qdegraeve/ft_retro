@@ -2,12 +2,12 @@
 
 #include <sstream>
 
-Game::Game(unsigned int nb_player) : _nb_players(nb_player > NB_MAX_PLAYER ?
+Game::Game(unsigned int nb_player) : _menu(*new Window(HEIGHT_MENU, WIN_SPACE)),
+									_playground(*new Window(LINES - BEGIN_PG - WIN_SPACE, BEGIN_PG)),
+									_nb_players(nb_player > NB_MAX_PLAYER ?
 												NB_MAX_PLAYER : nb_player),
 									_nb_ennemy(0), _ennemy_list(NULL),
-									_nb_bullet(0), _bullet_list(NULL),
-									_menu(*new Window(HEIGHT_MENU, WIN_SPACE)),
-									_playground(*new Window(LINES - BEGIN_PG, BEGIN_PG))
+									_nb_bullet(0), _bullet_list(NULL)
 {
 	for(unsigned int i=0; i < nb_player; i++)
 		this->_players[i] = new Player(this->_playground);
@@ -85,6 +85,47 @@ void				Game::player_shoot(Player const & player)
 
 	new_bullet = new Bullet(player.get_pos_x(), this->_playground);
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
+}
+
+int					Game::start_game(void) {
+	int c = 0;
+	while (42) {
+		if ((c = wgetch(this->_playground.get_win())) != 27) {
+			mvwaddch(this->_playground.get_win(), this->_players[0]->get_pos_y(), this->_players[0]->get_pos_x(), ' ');
+			switch(c) {
+				case KEY_UP:
+					this->_players[0]->move(0, 1);
+					break;
+				case KEY_DOWN:
+					this->_players[0]->move(0, -1);
+					break;
+				case KEY_RIGHT:
+					this->_players[0]->move(-1, 0);
+					break;
+				case KEY_LEFT:
+					this->_players[0]->move(1, 0);
+					break;
+				case ERR:
+					break;
+				default:
+					this->player_shoot(*this->_players[0]);
+					break;
+			}
+			flushinp();
+			mvwaddch(this->_playground.get_win(), this->_players[0]->get_pos_y(), this->_players[0]->get_pos_x(), this->_players[0]->get_character());
+			if (this->_bullet_list)
+				mvwaddch(this->_playground.get_win(), this->_bullet_list->get_pos_y(), this->_bullet_list->get_pos_x(), this->_bullet_list->get_character());
+			this->move_bullets();
+		}
+		if (c == 27)
+			break ;
+		if (c == KEY_RESIZE) {
+			std::cout << "Resize is forbidden" << std::endl;
+			break ;
+		}
+		usleep(200000);
+	}
+	return (0);
 }
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/

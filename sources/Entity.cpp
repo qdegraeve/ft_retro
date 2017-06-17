@@ -170,7 +170,6 @@ Entity*				Entity::move_entity(Entity* list)
 		(void)next;
 		// }
 		ptr->move(0, 1);
-		std::cout << *ptr << std::endl;
 		ptr = ptr->get_next();
 	}
 	return (list);
