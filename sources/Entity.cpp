@@ -8,20 +8,22 @@ Entity::Entity(std::string type,
 				unsigned int pos_x,
 				unsigned int pos_y,
 				unsigned char character,
-				int speed) : _type(type),
+				int speed,
+				Window const & win) : _type(type),
 								_life_max(life_max),
 								_life(life_max),
 								_damage_point(damage_point),
 								_pos_x(pos_x),
 								_pos_y(pos_y),
 								_character(character),
-								_speed(speed)
+								_speed(speed),
+								_win(win)
 {
 	// std::cout << "Entity constructor called" << std::endl;
 	return ;
 }
 
-Entity::Entity(Entity const & src)
+Entity::Entity(Entity const & src) : _win(src.get_win())
 {
 	*this = src;
 	return ;
@@ -109,6 +111,11 @@ int					Entity::get_speed(void) const
 Entity*				Entity::get_next(void) const
 {
 	return (this->_next);
+}
+
+Window const &		Entity::get_win(void) const
+{
+	return (this->_win);
 }
 
 /*************************    		 SETTERS	     *************************/
@@ -249,8 +256,8 @@ void				Entity::move(int x_move, int y_move)
 	x_move *= this->_speed;
 	y_move *= this->_speed;
 
-	this->_pos_x = this->_check_move(this->_pos_x, x_move, COLONNES, 0);
-	this->_pos_y = this->_check_move(this->_pos_y, y_move, LINES, 0);
+	this->_pos_x = this->_check_move(this->_pos_x, x_move, _win.get_cols(), 0);
+	this->_pos_y = this->_check_move(this->_pos_y, y_move, _win.get_lines(), 0);
 }
 
 /*************************    		PRIVATE		     *************************/

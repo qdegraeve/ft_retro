@@ -3,13 +3,14 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Ennemy::Ennemy(unsigned int pos_x) : Entity("Ennemy",
+Ennemy::Ennemy(unsigned int pos_x, Window const &win) : Entity("Ennemy",
 											5,		/* life max */
 											10,		/* damage point */
 											pos_x,	/* pos x */
 											0,		/* pos y */
 											'e',	/* character */
-											1)		/* speed */
+											1,
+											win)		/* speed */
 {
 	std::cout << "Ennemy constructor called" << std::endl;
 	return ;

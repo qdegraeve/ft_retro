@@ -2,9 +2,10 @@
 # define ENTITY_HPP
 
 #include <iostream>
+#include "Window.hpp"
 
-#ifndef LINES
-# define LINES 20
+#ifndef LIGNES
+# define LIGNES 20
 #endif
 #ifndef COLONNES
 # define COLONNES 10
@@ -20,7 +21,8 @@ class Entity
 				unsigned int pos_x,
 				unsigned int pos_y,
 				unsigned char character,
-				int speed);								/* constructor by default */
+				int speed,
+				Window const & win);								/* constructor by default */
 		Entity(Entity const & src);						/* constructor by copy */
 		/* destructor */
 		virtual ~Entity();								/* destructor */
@@ -38,6 +40,7 @@ class Entity
 		unsigned char		get_character() const;
 		int					get_speed() const;
 		Entity*				get_next() const;
+		Window const &		get_win() const;
 
 		/* Setters */
 		void				set_damage_point(unsigned int damage_point);
@@ -73,6 +76,7 @@ class Entity
 			unsigned char			_character;
 			int						_speed;
 
+			Window const &			_win;
 			Entity*					_next;
 
 	private:
