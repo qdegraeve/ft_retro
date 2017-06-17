@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#ifndef LINES
-# define LINES 20
+#ifndef LIGNES
+# define LIGNES 20
 #endif
 #ifndef COLONNES
 # define COLONNES 10
@@ -37,6 +37,7 @@ class Entity
 		unsigned int		get_pos_y() const;
 		unsigned char		get_character() const;
 		int					get_speed() const;
+		Entity*				get_next() const;
 
 		/* Setters */
 		void				set_damage_point(unsigned int damage_point);
@@ -44,6 +45,17 @@ class Entity
 		void				set_pos_y(unsigned int new_pos_y);
 		void				set_speed(int new_speed);
 		void				set_type(std::string const & new_type);
+
+		/* List - Getters */
+		static Entity*		get_one_entity(Entity* list, unsigned int index);
+
+		/* List - Setters */
+		void				set_next(Entity* next);
+
+		/* List - Functions */
+		static Entity*		set_entity_at_end(Entity* list, Entity* to_add);
+		static void			delete_entity_list(Entity* list);
+		static Entity*		delete_one_entity_on_list(Entity* list, Entity* to_del);
 
 		/* Others */
 		void				take_damage(unsigned int amount);
@@ -59,6 +71,8 @@ class Entity
 			unsigned int			_pos_y;
 			unsigned char			_character;
 			int						_speed;
+
+			Entity*					_next;
 
 	private:
 

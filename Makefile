@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mressier <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/06/12 11:36:38 by mressier          #+#    #+#              #
-#    Updated: 2017/06/17 16:35:56 by qdegraev         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME=ft_retro
 
 FLAGS = -Wall -Wextra -Werror
@@ -21,7 +9,7 @@ O_DIR = .tmp/
 
 ### TO COMPLETE ###
 
-CORE = main.cpp Entity.cpp Player.cpp Ennemy.cpp Bullet.cpp Game.cpp
+CORE = main.cpp Entity.cpp Player.cpp Ennemy.cpp Bullet.cpp Game.cpp Window.cpp
 SRC_CORE = $(addprefix $(CPP_DIR)/, $(CORE))
 
 ### END ###

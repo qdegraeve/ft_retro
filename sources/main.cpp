@@ -72,4 +72,8 @@ int main()
 		usleep(20000);
 	}
 	endwin();
+	std::cout << mathilde << std::endl;
+	game.generate_ennemy();
+	game.player_shoot(mathilde);
+	return (0);
 }

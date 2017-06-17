@@ -18,11 +18,15 @@ class Game
 		/* Getters */
 		unsigned int		get_nb_players(void) const;
 		Player&				get_player(unsigned int index) const;
+		unsigned int		get_nb_ennemy(void) const;
+		Ennemy*				get_ennemy_list(void) const;
 
 		/* Setters */
 
 		/* Public member functions */
-		void				GenerateEnemy(void);
+		void				generate_ennemy(void);
+
+		void				player_shoot(Player const & player);
 
 	protected:
 
@@ -33,11 +37,10 @@ class Game
 		Game(void);								/* constructor by default */
 		Game & operator=(Game const & rhs);		/* overload operator = */
 
-
 		unsigned int		_nb_players;
 		Player*				_players;
-		unsigned int		_nb_enemy;
-		Ennemy*				_enemy_list;
+		unsigned int		_nb_ennemy;
+		Ennemy*				_ennemy_list;
 		unsigned int		_nb_bullet;
 		Bullet*				_bullet_list;
 

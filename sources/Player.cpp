@@ -7,19 +7,17 @@ Player::Player(void) : Entity("Player",
 								100,	/* life max */
 								10,		/* damage point */
 								(COLONNES / 2),	/* pos x */
-								LINES,		/* pos y */
+								LIGNES,		/* pos y */
 								'p',	/* character */
 								-1)		/* speed */
 {
 	this->_name = "Player";
-	std::cout << "Player constructor called" << std::endl;
 	return ;
 }
 
 Player::Player(Player const & src) : Entity(src)
 {
 
-	std::cout << "Player Copy constructor called" << std::endl;
 	*this = src;
 	return ;
 }

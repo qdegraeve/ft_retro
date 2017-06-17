@@ -106,6 +106,11 @@ int					Entity::get_speed(void) const
 	return (this->_speed);
 }
 
+Entity*				Entity::get_next(void) const
+{
+	return (this->_next);
+}
+
 /*************************    		 SETTERS	     *************************/
 
 void				Entity::set_pos_x(unsigned int new_pos_x)
@@ -133,6 +138,78 @@ void				Entity::set_damage_point(unsigned int new_damage_point)
 	this->_damage_point = new_damage_point;
 }
 
+/*************************    	LIST-SETTERS	     *************************/
+
+void				Entity::set_next(Entity *next)
+{
+	this->_next = next;
+}
+
+Entity*				Entity::set_entity_at_end(Entity* list, Entity* to_add)
+{
+	Entity	*ptr;
+
+	if (list == NULL)
+		return (to_add);
+	ptr = list;
+	while (ptr->_next != NULL)
+		ptr = ptr->_next;
+	ptr->set_next(to_add);
+	to_add->set_next(NULL);
+	return (list);
+}
+
+Entity*				Entity::get_one_entity(Entity* list, unsigned int index)
+{
+	Entity*			ptr;
+
+	ptr = list;
+	while (index > 0 && ptr != NULL)
+	{
+		ptr = ptr->get_next();
+		index--;
+	}
+	return (ptr);
+}
+
+void				Entity::delete_entity_list(Entity* list)
+{
+	Entity*			ptr;
+	Entity*			next;
+
+	ptr = list;
+	while (ptr != NULL)
+	{
+		next = ptr->get_next();
+		delete ptr;
+		ptr = next;
+	}
+}
+
+Entity*				Entity::delete_one_entity_on_list(Entity* list, Entity* to_del)
+{
+	Entity*		ptr;
+	Entity*		prev;
+
+	prev = NULL;
+	ptr = list;
+	while (ptr != NULL)
+	{
+		if (ptr == to_del)
+		{
+			if (prev == NULL)
+				list = ptr->get_next();
+			else
+				prev->set_next(ptr->get_next());
+			delete ptr;
+			break ;
+		}
+		prev = ptr;
+		ptr = ptr->get_next();
+	}
+	return list;
+}
+
 /*************************    		OTHERS		     *************************/
 
 void				Entity::take_damage(unsigned int amount)
@@ -149,7 +226,7 @@ void				Entity::move(int x_move, int y_move)
 	y_move *= this->_speed;
 
 	this->_pos_x = this->_check_move(this->_pos_x, x_move, COLONNES, 0);
-	this->_pos_y = this->_check_move(this->_pos_y, y_move, LINES, 0);
+	this->_pos_y = this->_check_move(this->_pos_y, y_move, LIGNES, 0);
 }
 
 /*************************    		PRIVATE		     *************************/
