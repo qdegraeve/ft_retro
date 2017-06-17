@@ -1,6 +1,13 @@
 #ifndef GAME_HPP
 # define GAME_HPP
 
+#include "Player.hpp"
+#include "Bullet.hpp"
+#include "Ennemy.hpp"
+#include <iostream>
+
+#define NB_MAX_PLAYER 1
+
 class Game
 {
 	public:
@@ -8,20 +15,28 @@ class Game
 		Game(Game const & src);					/* constructor by copy */
 		~Game();								/* destructor */
 
-		Game & operator=(Game const & rhs);		/* overload operator = */
+		/* Getters */
+		unsigned int		get_nb_players(void) const;
+		Player&				get_player(unsigned int index) const;
+
+		/* Setters */
+
+	protected:
+
+		// GenerateEnemy();
+		// checkCollision();
+		// Draw();
 
 	private:
-
-		GenerateEnemy();
-		checkCollision();
-		Draw();
+		Game(void);								/* constructor by default */
+		Game & operator=(Game const & rhs);		/* overload operator = */
 
 
-		Player		*players;
-		Enemy		*enemy_list;
-		Bullet		*bullet_list;
-
-
+		unsigned int		_nb_players;
+		Player*				_players[NB_MAX_PLAYER];
+		unsigned int		_nb_enemies;
+		Ennemy*				_enemy_list;
+		Bullet*				_bullet_list;
 
 };
 #endif /* GAME_HPP */
