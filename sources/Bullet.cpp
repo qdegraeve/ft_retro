@@ -3,13 +3,14 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Bullet::Bullet(unsigned int pos_x) : Entity("Bullet", /* type */
+Bullet::Bullet(unsigned int pos_x, Window const & win) : Entity("Bullet", /* type */
 											1,		/* life max */
 											3,		/* damage point */
 											pos_x,	/* pos x */
 											LIGNES - 1,		/* pos y */
 											'-',	/* character */
-											2)		/* speed */
+											2,
+											win)		/* speed */
 {
 	std::cout << "Bullet constructor called" << std::endl;
 	return ;

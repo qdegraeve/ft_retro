@@ -9,7 +9,7 @@ Entity::Entity(std::string type,
 				unsigned int pos_y,
 				unsigned char character,
 				int speed,
-				Window *win) : _type(type),
+				Window const & win) : _type(type),
 								_life_max(life_max),
 								_life(life_max),
 								_damage_point(damage_point),
@@ -23,7 +23,7 @@ Entity::Entity(std::string type,
 	return ;
 }
 
-Entity::Entity(Entity const & src)
+Entity::Entity(Entity const & src) : _win(src.get_win())
 {
 	*this = src;
 	return ;
@@ -111,6 +111,11 @@ int					Entity::get_speed(void) const
 Entity*				Entity::get_next(void) const
 {
 	return (this->_next);
+}
+
+Window const &		Entity::get_win(void) const
+{
+	return (this->_win);
 }
 
 /*************************    		 SETTERS	     *************************/
@@ -227,8 +232,8 @@ void				Entity::move(int x_move, int y_move)
 	x_move *= this->_speed;
 	y_move *= this->_speed;
 
-	this->_pos_x = this->_check_move(this->_pos_x, x_move, _win->get_cols(), 0);
-	this->_pos_y = this->_check_move(this->_pos_y, y_move, _win->get_lines(), 0);
+	this->_pos_x = this->_check_move(this->_pos_x, x_move, _win.get_cols(), 0);
+	this->_pos_y = this->_check_move(this->_pos_y, y_move, _win.get_lines(), 0);
 }
 
 /*************************    		PRIVATE		     *************************/

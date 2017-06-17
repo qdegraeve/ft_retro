@@ -22,7 +22,7 @@ class Entity
 				unsigned int pos_y,
 				unsigned char character,
 				int speed,
-				Window *win);								/* constructor by default */
+				Window const & win);								/* constructor by default */
 		Entity(Entity const & src);						/* constructor by copy */
 		/* destructor */
 		virtual ~Entity();								/* destructor */
@@ -40,6 +40,7 @@ class Entity
 		unsigned char		get_character() const;
 		int					get_speed() const;
 		Entity*				get_next() const;
+		Window const &		get_win() const;
 
 		/* Setters */
 		void				set_damage_point(unsigned int damage_point);
@@ -74,7 +75,7 @@ class Entity
 			unsigned char			_character;
 			int						_speed;
 
-			Window*					_win;
+			Window const &			_win;
 			Entity*					_next;
 
 	private:

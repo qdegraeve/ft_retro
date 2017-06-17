@@ -7,6 +7,9 @@
 #include <iostream>
 
 #define NB_MAX_PLAYER 1
+#define HEIGHT_MENU 10
+#define WIN_SPACE 2
+#define BEGIN_PG (HEIGHT_MENU - (2 * WIN_SPACE))
 
 class Game
 {
@@ -38,11 +41,13 @@ class Game
 		Game & operator=(Game const & rhs);		/* overload operator = */
 
 		unsigned int		_nb_players;
-		Player*				_players;
+		Player*				_players[NB_MAX_PLAYER];
 		unsigned int		_nb_ennemy;
 		Ennemy*				_ennemy_list;
 		unsigned int		_nb_bullet;
 		Bullet*				_bullet_list;
+		Window const &		_menu;
+		Window const &		_playground;
 
 };
 #endif /* GAME_HPP */

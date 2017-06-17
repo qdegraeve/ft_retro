@@ -8,7 +8,7 @@ class Player : public Entity {
 
 public:
 
-	Player(Window *win);
+	Player(Window const & win);
 	Player(Player const & src);
 	virtual ~Player();
 

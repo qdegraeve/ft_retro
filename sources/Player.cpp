@@ -3,7 +3,7 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Player::Player(Window *win) : Entity("Player",
+Player::Player(Window const & win) : Entity("Player",
 								100,	/* life max */
 								10,		/* damage point */
 								(COLONNES / 2),	/* pos x */
