@@ -6,7 +6,7 @@
 #    By: mressier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/12 11:36:38 by mressier          #+#    #+#              #
-#    Updated: 2017/06/17 09:41:12 by mressier         ###   ########.fr        #
+#    Updated: 2017/06/17 12:19:32 by qdegraev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(O_DIR)%.o: %.cpp
 	@clang++ $(FLAGS) -o $@ -c $<
 
 $(NAME): $(O_FILES)
-	@clang++ $(FLAGS) -o $(NAME) $(O_FILES)
+	@clang++ $(FLAGS) $(INCLUDES) -o $(NAME) $(O_FILES)
 	@printf "[\033[32;1m Run \033[0m]\033[31;1m $(NAME) \033[0m\\n"
 
 clean:
