@@ -266,7 +266,7 @@ bool				Entity::_current_position_on_board_is_ok(void)
 {
 	if (this->_pos_y == 0 || this->_pos_x == 0)
 		return (false);
-	if (this->_pos_y == LINES || this->_pos_x == COLONNES)
+	if (this->_pos_y == LIGNES || this->_pos_x == COLONNES)
 		return (false);
 	return (true);
 }
