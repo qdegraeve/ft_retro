@@ -5,7 +5,7 @@
 Game::Game(unsigned int nb_player) : _nb_players(nb_player > NB_MAX_PLAYER ?
 												NB_MAX_PLAYER : nb_player),
 									_players(new Player[this->_nb_players]),
-									_nb_enemies(0), _enemy_list(NULL),
+									_nb_enemy(0), _enemy_list(NULL),
 									_nb_bullet(0), _bullet_list(NULL)
 
 {

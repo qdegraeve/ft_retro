@@ -34,7 +34,7 @@ class Game
 
 		unsigned int		_nb_players;
 		Player*				_players;
-		unsigned int		_nb_enemies;
+		unsigned int		_nb_enemy;
 		Ennemy*				_enemy_list;
 		unsigned int		_nb_bullet;
 		Bullet*				_bullet_list;
