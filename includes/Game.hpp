@@ -49,6 +49,9 @@ class Game
 		Game(void);								/* constructor by default */
 		Game & operator=(Game const & rhs);		/* overload operator = */
 
+		unsigned int		_level;
+		unsigned int		_score;
+		unsigned int		_nb_enemy_to_shoot;
 		unsigned int		_nb_players;
 		Player*				_players[NB_MAX_PLAYER];
 		unsigned int		_nb_ennemy;
@@ -57,6 +60,5 @@ class Game
 		Bullet*				_bullet_list;
 		Window const &		_menu;
 		Window const &		_playground;
-
 };
 #endif /* GAME_HPP */
