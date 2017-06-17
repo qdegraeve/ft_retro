@@ -8,9 +8,9 @@ Window::Window(void) {
 }
 
 Window::Window(int const lines, int const begin)
-	: _win(newwin(lines, COLS - 4, begin, 4)),
+	: _win(newwin(lines, COLS - OUTSPACE, begin, OUTSPACE)),
 	_lines(lines - 1),
-	_cols(COLS - 4 - 2) {
+	_cols(COLS - OUTSPACE) {
 	box(this->_win, 0, 0);
 	wrefresh(this->_win);
 	return ;

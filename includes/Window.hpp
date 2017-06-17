@@ -4,6 +4,8 @@
 # include <string>
 # include <ncurses.h>
 
+# define OUTSPACE 4
+
 class Window {
 
 public:

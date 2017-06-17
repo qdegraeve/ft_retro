@@ -9,7 +9,7 @@
 #define NB_MAX_PLAYER 1
 #define HEIGHT_MENU 10
 #define WIN_SPACE 2
-#define BEGIN_PG (HEIGHT_MENU - (2 * WIN_SPACE))
+#define BEGIN_PG (HEIGHT_MENU + 1)
 
 class Game
 {

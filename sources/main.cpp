@@ -47,16 +47,16 @@ int main()
 			mvwaddch(playground.get_win(), y, x, ' ');
 			switch(c) {
 				case KEY_UP:
-					y = max(1, y - 1);
+					y = max(2, y - 1);
 					break;
 				case KEY_DOWN:
-					y = min(playground.get_lines() - 1, y + 1);
+					y = min(playground.get_lines() + 1, y + 1);
 					break;
 				case KEY_RIGHT:
-					x = min(playground.get_cols() - 1, x + 1);
+					x = min(playground.get_cols() + 1, x + 1);
 					break;
 				case KEY_LEFT:
-					x = max(1, x - 1);
+					x = max(2, x - 1);
 					break;
 			}
 			flushinp();
@@ -65,7 +65,6 @@ int main()
 		if (c == 27)
 			break ;
 		if (c == KEY_RESIZE) {
-			erase();
 			std::cout << "Resize is forbidden" << std::endl;
 			break ;
 		}
