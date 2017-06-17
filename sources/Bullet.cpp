@@ -4,7 +4,7 @@
 /*************************     CONSTRUCTORS     *******************************/
 
 Bullet::Bullet(unsigned int pos_x, unsigned int pos_y,
-				Window & win) : Entity("Bullet", /* type */
+				Window const & win) : Entity("Bullet", /* type */
 											1,		/* life max */
 											3,		/* damage point */
 											pos_x + 1,	/* pos x */
