@@ -21,9 +21,11 @@ class Game
 
 		/* Setters */
 
+		/* Public member functions */
+		void				GenerateEnemy(void);
+
 	protected:
 
-		// GenerateEnemy();
 		// checkCollision();
 		// Draw();
 

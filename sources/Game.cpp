@@ -52,6 +52,11 @@ Player&				Game::get_player(unsigned int index) const
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/
 
+void				GenerateEnemy(void)
+{
+	return ;
+}
+
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
 
 /*************************     NON MEMBER FUNTIONS     ************************/

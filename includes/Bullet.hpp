@@ -14,6 +14,9 @@ class Bullet : public Entity
 	private:
 		Bullet &	operator=(Bullet const & rhs);
 		Bullet(void);
+
+		Bullet		*next;
+
 };
 
 #endif
