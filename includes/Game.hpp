@@ -6,7 +6,7 @@
 /*   By: mressier <mressier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 10:01:23 by mressier          #+#    #+#             */
-/*   Updated: 2017/06/17 10:03:04 by mressier         ###   ########.fr       */
+/*   Updated: 2017/06/17 10:47:50 by mressier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ class Game
 		Game & operator=(Game const & rhs);		/* overload operator = */
 
 	private:
+
+		GenerateEnemy();
+		checkCollision();
+		Draw();
+
+
+		Player		*players;
+		Enemy		*enemy_list;
+		Bullet		*bullet_list;
+
+
 
 };
 #endif /* GAME_HPP */
