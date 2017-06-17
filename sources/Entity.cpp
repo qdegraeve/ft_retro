@@ -17,21 +17,13 @@ Entity::Entity(std::string type,
 								_character(character),
 								_speed(speed)
 {
-	std::cout << "Entity constructor called" << std::endl;
+	// std::cout << "Entity constructor called" << std::endl;
 	return ;
 }
 
 Entity::Entity(Entity const & src)
 {
-	this->_type = src.get_type();
-	this->_life_max = src.get_life_max();
-	this->_life = src.get_life();
-	this->_damage_point = src.get_damage_point();
-	this->_pos_x = src.get_pos_x();
-	this->_pos_y = src.get_pos_y();
-	this->_character = src.get_character();
-	this->_speed = src.get_speed();
-	// etc..
+	*this = src;
 	return ;
 }
 
@@ -39,7 +31,7 @@ Entity::Entity(Entity const & src)
 
 Entity::~Entity()
 {
-	std::cout << "Entity destructor called" << std::endl;
+	// std::cout << "Entity destructor called" << std::endl;
 	return ;
 }
 
@@ -47,20 +39,23 @@ Entity::~Entity()
 
 Entity & 			Entity::operator=(Entity const & rhs)
 {
-	this->_type = rhs.get_type();
-	this->_life_max = rhs.get_life_max();
-	this->_life = rhs.get_life();
-	this->_damage_point = rhs.get_damage_point();
-	this->_pos_x = rhs.get_pos_x();
-	this->_pos_y = rhs.get_pos_y();
-	this->_character = rhs.get_character();
-	this->_speed = rhs.get_speed();
+	if (this != &rhs)
+	{
+		this->_type = rhs.get_type();
+		this->_life_max = rhs.get_life_max();
+		this->_life = rhs.get_life();
+		this->_damage_point = rhs.get_damage_point();
+		this->_pos_x = rhs.get_pos_x();
+		this->_pos_y = rhs.get_pos_y();
+		this->_character = rhs.get_character();
+		this->_speed = rhs.get_speed();
+	}
 	return (*this);
 }
 
 std::ostream &		operator<<(std::ostream & o, Entity const & rhs)
 {
-	o << "Entity <"
+	o << "<"
 		<< rhs.get_type()
 		<< " (" << rhs.get_life() << "/" <<  rhs.get_life_max() << "PV)"
 		<< "[" << rhs.get_pos_x() << "," << rhs.get_pos_y() << "]"
