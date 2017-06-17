@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Entity.hpp                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mressier <mressier@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/17 09:55:04 by mressier          #+#    #+#             */
-/*   Updated: 2017/06/17 11:52:09 by mressier         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef ENTITY_HPP
 # define ENTITY_HPP
 
@@ -52,7 +40,3 @@ class Entity
 std::ostream &		operator<<(std::ostream & o, Entity const & rhs);
 
 #endif /* ENTITY_HPP */
-
-test() : Entity("bullet", 54)
-
-test2() : Entity("test2", asdsd)
