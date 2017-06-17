@@ -24,6 +24,13 @@ Entity::Entity(std::string type,
 Entity::Entity(Entity const & src)
 {
 	this->_type = src.get_type();
+	this->_life_max = src.get_life_max();
+	this->_life = src.get_life();
+	this->_damage_point = src.get_damage_point();
+	this->_pos_x = src.get_pos_x();
+	this->_pos_y = src.get_pos_y();
+	this->_character = src.get_character();
+	this->_speed = src.get_speed();
 	// etc..
 	return ;
 }
@@ -41,7 +48,13 @@ Entity::~Entity()
 Entity & 			Entity::operator=(Entity const & rhs)
 {
 	this->_type = rhs.get_type();
-	// etc..
+	this->_life_max = rhs.get_life_max();
+	this->_life = rhs.get_life();
+	this->_damage_point = rhs.get_damage_point();
+	this->_pos_x = rhs.get_pos_x();
+	this->_pos_y = rhs.get_pos_y();
+	this->_character = rhs.get_character();
+	this->_speed = rhs.get_speed();
 	return (*this);
 }
 
@@ -49,9 +62,9 @@ std::ostream &		operator<<(std::ostream & o, Entity const & rhs)
 {
 	o << "Entity <"
 		<< rhs.get_type()
-		<< " (" << rhs.get_life() << "/" <<  rhs.get_max_life() << "PV)"
+		<< " (" << rhs.get_life() << "/" <<  rhs.get_life_max() << "PV)"
 		<< "[" << rhs.get_pos_x() << "," << rhs.get_pos_y() << "]"
-		<< "(" << rhs.get_charater() << ")"
+		<< "(" << rhs.get_character() << ")"
 		<< ">";
 	return (o);
 }
@@ -68,7 +81,7 @@ unsigned int		Entity::get_life(void) const
 	return (this->_life);
 }
 
-unsigned int		Entity::get_max_life(void) const
+unsigned int		Entity::get_life_max(void) const
 {
 	return (this->_life_max);
 }
@@ -88,7 +101,7 @@ unsigned int		Entity::get_pos_y(void) const
 	return (this->_pos_y);
 }
 
-unsigned char		Entity::get_charater() const
+unsigned char		Entity::get_character() const
 {
 	return (this->_character);
 }
@@ -113,6 +126,11 @@ void				Entity::set_pos_y(unsigned int new_pos_y)
 void				Entity::set_speed(int new_speed)
 {
 	this->_speed = new_speed;
+}
+
+void				Entity::set_type(std::string const & new_type)
+{
+	this->_type = new_type;
 }
 
 /*************************    		OTHERS		     *************************/

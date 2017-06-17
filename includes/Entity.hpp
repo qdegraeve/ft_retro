@@ -31,17 +31,18 @@ class Entity
 		/* Getters */
 		std::string	const	get_type() const;
 		unsigned int		get_life() const;
-		unsigned int		get_max_life() const;
+		unsigned int		get_life_max() const;
 		unsigned int		get_damage_point() const;
 		unsigned int		get_pos_x() const;
 		unsigned int		get_pos_y() const;
-		unsigned char		get_charater() const;
+		unsigned char		get_character() const;
 		int					get_speed() const;
 
 		/* Setters */
 		void				set_pos_x(unsigned int new_pos_x);
 		void				set_pos_y(unsigned int new_pos_y);
 		void				set_speed(int new_speed);
+		void				set_type(std::string const & new_type);
 
 		/* Others */
 		void				take_damage(unsigned int amount);
