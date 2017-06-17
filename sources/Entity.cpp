@@ -145,6 +145,22 @@ void				Entity::set_next(Entity *next)
 	this->_next = next;
 }
 
+/*************************    		STATIC		     *************************/
+
+void				Entity::move_entity(Entity* list)
+{
+	Entity			*ptr;
+
+	ptr = list;
+	while (ptr)
+	{
+		ptr->move(0, 1);
+		std::cout << *ptr << std::endl;
+		ptr = ptr->get_next();
+	}
+	return ;
+}
+
 Entity*				Entity::set_entity_at_end(Entity* list, Entity* to_add)
 {
 	Entity	*ptr;

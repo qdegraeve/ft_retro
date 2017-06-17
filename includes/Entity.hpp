@@ -53,6 +53,7 @@ class Entity
 		void				set_next(Entity* next);
 
 		/* List - Functions */
+		static void			move_entity(Entity* list);
 		static Entity*		set_entity_at_end(Entity* list, Entity* to_add);
 		static void			delete_entity_list(Entity* list);
 		static Entity*		delete_one_entity_on_list(Entity* list, Entity* to_del);

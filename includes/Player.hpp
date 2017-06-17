@@ -12,7 +12,7 @@ public:
 	Player(Player const & src);
 	virtual ~Player();
 
-	Player &		operator=(Player const & rhs);
+	Player &			operator=(Player const & rhs);
 
 	/* Getter */
 	std::string	const	get_name(void) const;

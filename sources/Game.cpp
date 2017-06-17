@@ -75,6 +75,7 @@ void				Game::generate_ennemy(void)
 		new_ennemy = new Ennemy(i);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
+	return ;
 }
 
 void				Game::player_shoot(Player const & player)
@@ -83,9 +84,20 @@ void				Game::player_shoot(Player const & player)
 
 	new_bullet = new Bullet(player.get_pos_x());
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
+	return ;
 }
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
+
+void			Game::move_bullets(void)
+{
+	Entity::move_entity((Entity *)this->_bullet_list);
+}
+
+void			Game::move_ennemy(void)
+{
+	Entity::move_entity((Entity *)this->_ennemy_list);
+}
 
 /*************************     NON MEMBER FUNTIONS     ************************/
 

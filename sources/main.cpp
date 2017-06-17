@@ -11,5 +11,10 @@ int main()
 	std::cout << mathilde << std::endl;
 	game.generate_ennemy();
 	game.player_shoot(mathilde);
+	for (int i = 0; i < 20; ++i)
+	{
+		game.move_bullets();
+		game.move_ennemy();
+	}
 	return (0);
 }

@@ -9,7 +9,7 @@ Bullet::Bullet(unsigned int pos_x) : Entity("Bullet", /* type */
 											pos_x,	/* pos x */
 											LINES - 1,		/* pos y */
 											'-',	/* character */
-											2)		/* speed */
+											-2)		/* speed */
 {
 	std::cout << "Bullet constructor called" << std::endl;
 	return ;

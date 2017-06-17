@@ -23,10 +23,17 @@ class Game
 
 		/* Setters */
 
-		/* Public member functions */
+		/* Ennemy functions */
 		void				generate_ennemy(void);
 
+		/* Player functions */
 		void				player_shoot(Player const & player);
+
+		/* Bullets */
+		void			move_bullets(void);
+
+		/* Ennemy */
+		void			move_ennemy(void);
 
 	protected:
 
@@ -34,6 +41,7 @@ class Game
 		// Draw();
 
 	private:
+
 		Game(void);								/* constructor by default */
 		Game & operator=(Game const & rhs);		/* overload operator = */
 
