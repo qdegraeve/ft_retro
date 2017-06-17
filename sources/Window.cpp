@@ -37,7 +37,7 @@ Window &	Window::operator=(Window const & rhs) {
 		this->_lines = rhs.get_lines();
 		this->_cols = rhs.get_cols();
 	}
-	
+
 	return *this;
 }
 

@@ -31,13 +31,14 @@ class Game
 		void				generate_ennemy(void);
 
 		/* Player functions */
+		void				move_player();
 		void				player_shoot(Player const & player);
 
 		/* Bullets */
-		void			move_bullets(void);
+		void				move_bullets(void);
 
 		/* Ennemy */
-		void			move_ennemy(void);
+		void				move_ennemy(void);
 
 		Window const &	_menu;
 		Window const &	_playground;
@@ -56,12 +57,14 @@ class Game
 		Game(void);								/* constructor by default */
 		Game & operator=(Game const & rhs);		/* overload operator = */
 
+		unsigned int		_level;
+		unsigned int		_score;
+		unsigned int		_nb_enemy_to_shoot;
 		unsigned int		_nb_players;
 		Player*				_players[NB_MAX_PLAYER];
 		unsigned int		_nb_ennemy;
 		Ennemy*				_ennemy_list;
 		unsigned int		_nb_bullet;
 		Bullet*				_bullet_list;
-
 };
 #endif /* GAME_HPP */

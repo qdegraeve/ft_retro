@@ -88,12 +88,12 @@ unsigned int		Entity::get_damage_point(void) const
 	return (this->_damage_point);
 }
 
-unsigned int		Entity::get_pos_x(void) const
+int					Entity::get_pos_x(void) const
 {
 	return (this->_pos_x);
 }
 
-unsigned int		Entity::get_pos_y(void) const
+int					Entity::get_pos_y(void) const
 {
 	return (this->_pos_y);
 }
@@ -120,12 +120,12 @@ Window const &		Entity::get_win(void) const
 
 /*************************    		 SETTERS	     *************************/
 
-void				Entity::set_pos_x(unsigned int new_pos_x)
+void				Entity::set_pos_x(int new_pos_x)
 {
 	this->_pos_x = new_pos_x;
 }
 
-void				Entity::set_pos_y(unsigned int new_pos_y)
+void				Entity::set_pos_y(int new_pos_y)
 {
 	this->_pos_y = new_pos_y;
 }
@@ -154,7 +154,7 @@ void				Entity::set_next(Entity *next)
 
 /*************************    		STATIC		     *************************/
 
-Entity*				Entity::move_entity(Entity* list)
+Entity*				Entity::move_entity_list(Entity* list)
 {
 	Entity			*ptr;
 	Entity			*next;
@@ -162,15 +162,18 @@ Entity*				Entity::move_entity(Entity* list)
 	ptr = list;
 	while (ptr)
 	{
-		// if (ptr->_current_position_on_board_is_ok() == false)
-		// {
-		// 	next = ptr->get_next();
-		// 	list = Entity::delete_one_entity_on_list(list, ptr);
-		// 	ptr = next;
-		(void)next;
-		// }
-		ptr->move(0, 1);
-		ptr = ptr->get_next();
+		if (ptr->_current_position_on_board_is_ok() == false)
+		{
+			next = ptr->get_next();
+			list = Entity::delete_one_entity_on_list(list, ptr);
+			ptr = next;
+		}
+		else
+		{
+			ptr->move(0, 1);
+			std::cout << *ptr << std::endl;
+			ptr = ptr->get_next();
+		}
 	}
 	return (list);
 }
@@ -255,32 +258,17 @@ void				Entity::move(int x_move, int y_move)
 	x_move *= this->_speed;
 	y_move *= this->_speed;
 
-	this->_pos_x = this->_check_move(this->_pos_x, x_move, _win.get_cols(), 0);
-	this->_pos_y = this->_check_move(this->_pos_y, y_move, _win.get_lines(), 0);
+	this->_pos_x += x_move;
+	this->_pos_y += y_move;
 }
 
 /*************************    		PRIVATE		     *************************/
 
 bool				Entity::_current_position_on_board_is_ok(void)
 {
-	if (this->_pos_y == 0 || this->_pos_x == 0)
+	if (this->_pos_y < 0 || this->_pos_x < 0)
 		return (false);
-	if (this->_pos_y == LIGNES || this->_pos_x == COLONNES)
+	if (this->_pos_y >= _win.get_lines() || this->_pos_x > _win.get_cols())
 		return (false);
 	return (true);
-}
-
-unsigned int		Entity::_check_move(unsigned int current_pos, int move,
-										int pos_max, int pos_min) const
-{
-	unsigned int new_pos;
-
-	new_pos = current_pos;
-	if ((int)(current_pos + move) > pos_max)
-		new_pos = pos_max;
-	else if ((int)(current_pos + move) < pos_min)
-		new_pos = pos_min;
-	else
-		new_pos += move;
-	return (new_pos);
 }
