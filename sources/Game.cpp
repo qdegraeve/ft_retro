@@ -33,6 +33,8 @@ Game::~Game()
 		delete this->_players[i];
 	Entity::delete_entity_list((Entity *)this->_ennemy_list);
 	Entity::delete_entity_list((Entity *)this->_bullet_list);
+	delete &this->_playground;
+	delete &this->_menu;
 	return ;
 }
 

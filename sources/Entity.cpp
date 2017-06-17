@@ -18,7 +18,8 @@ Entity::Entity(std::string type,
 								_pos_y(pos_y),
 								_character(character),
 								_speed(speed),
-								_win(win)
+								_win(win),
+								_next(NULL)
 {
 	// std::cout << "Entity constructor called" << std::endl;
 	return ;
@@ -52,6 +53,7 @@ Entity & 			Entity::operator=(Entity const & rhs)
 		this->_pos_y = rhs.get_pos_y();
 		this->_character = rhs.get_character();
 		this->_speed = rhs.get_speed();
+		this->_next = rhs.get_next();
 	}
 	return (*this);
 }
@@ -157,9 +159,10 @@ void				Entity::set_next(Entity *next)
 
 Entity*				Entity::move_entity_list(Entity* list)
 {
-	Entity			*ptr;
-	Entity			*next;
+	Entity			*ptr = NULL;
+	Entity			*next = NULL;
 	int				old_x, old_y = 0;
+
 
 	ptr = list;
 	while (ptr)
@@ -185,7 +188,7 @@ Entity*				Entity::move_entity_list(Entity* list)
 
 Entity*				Entity::set_entity_at_end(Entity* list, Entity* to_add)
 {
-	Entity	*ptr;
+	Entity	*ptr = NULL;
 
 	if (list == NULL)
 		return (to_add);
