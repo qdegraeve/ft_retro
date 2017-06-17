@@ -137,14 +137,14 @@ int					Game::start_game(void) {
 void			Game::move_bullets(void)
 {
 	if (this->_bullet_list)
-		this->_bullet_list->move_entity_list(this->_bullet_list);
+		this->_bullet_list = (Bullet *)this->_bullet_list->move_entity_list(this->_bullet_list);
 	return ;
 }
 
 void			Game::move_ennemies(void)
 {
 	if (this->_ennemy_list)
-		this->_ennemy_list->move_entity_list(this->_ennemy_list);
+		this->_ennemy_list = (Ennemy *)this->_ennemy_list->move_entity_list(this->_ennemy_list);
 	return ;
 }
 

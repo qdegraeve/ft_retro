@@ -7,7 +7,7 @@
 class Bullet : public Entity
 {
 	public:
-		Bullet(unsigned int pos_x, Window const & win);
+		Bullet(unsigned int pos_x, unsigned int pos_y, Window const & win);
 		Bullet(Bullet const & src);
 		virtual ~Bullet();
 
