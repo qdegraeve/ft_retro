@@ -11,11 +11,6 @@
 # define COLONNES 10
 #endif
 
-namespace Entity_list
-{
-
-}
-
 class Entity
 {
 	public:
@@ -68,7 +63,7 @@ class Entity
 
 		/* Others */
 		void				take_damage(unsigned int amount);
-		void				move(int x_move, int y_move);
+		virtual void		move(int x_move, int y_move);
 
 	protected:
 
@@ -84,11 +79,12 @@ class Entity
 			Window const &			_win;
 			Entity*					_next;
 
+			bool					_current_position_on_board_is_ok(void);
+
 	private:
 
 		int							_check_move(int current_pos, int move,
 										int pos_max, int pos_min) const;
-		bool						_current_position_on_board_is_ok(void);
 };
 
 std::ostream &		operator<<(std::ostream & o, Entity const & rhs);
