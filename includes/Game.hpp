@@ -21,9 +21,11 @@ class Game
 
 		/* Setters */
 
+		/* Public member functions */
+		void				GenerateEnemy(void);
+
 	protected:
 
-		// GenerateEnemy();
 		// checkCollision();
 		// Draw();
 
@@ -33,9 +35,10 @@ class Game
 
 
 		unsigned int		_nb_players;
-		Player*				_players[NB_MAX_PLAYER];
-		unsigned int		_nb_enemies;
+		Player*				_players;
+		unsigned int		_nb_enemy;
 		Ennemy*				_enemy_list;
+		unsigned int		_nb_bullet;
 		Bullet*				_bullet_list;
 
 };
