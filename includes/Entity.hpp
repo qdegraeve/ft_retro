@@ -51,9 +51,9 @@ class Entity
 
 		/* List - Setters */
 		void				set_next(Entity* next);
+		Entity*				move_entity(Entity* list);
 
 		/* List - Functions */
-		static void			move_entity(Entity* list);
 		static Entity*		set_entity_at_end(Entity* list, Entity* to_add);
 		static void			delete_entity_list(Entity* list);
 		static Entity*		delete_one_entity_on_list(Entity* list, Entity* to_del);
@@ -79,6 +79,7 @@ class Entity
 
 		unsigned int				_check_move(unsigned int current_pos, int move,
 										int pos_max, int pos_min) const;
+		bool						_current_position_on_board_is_ok(void);
 };
 
 std::ostream &		operator<<(std::ostream & o, Entity const & rhs);

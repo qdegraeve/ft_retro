@@ -147,18 +147,26 @@ void				Entity::set_next(Entity *next)
 
 /*************************    		STATIC		     *************************/
 
-void				Entity::move_entity(Entity* list)
+Entity*				Entity::move_entity(Entity* list)
 {
 	Entity			*ptr;
+	Entity			*next;
 
 	ptr = list;
 	while (ptr)
 	{
+		// if (ptr->_current_position_on_board_is_ok() == false)
+		// {
+		// 	next = ptr->get_next();
+		// 	list = Entity::delete_one_entity_on_list(list, ptr);
+		// 	ptr = next;
+		(void)next;
+		// }
 		ptr->move(0, 1);
 		std::cout << *ptr << std::endl;
 		ptr = ptr->get_next();
 	}
-	return ;
+	return (list);
 }
 
 Entity*				Entity::set_entity_at_end(Entity* list, Entity* to_add)
@@ -246,6 +254,15 @@ void				Entity::move(int x_move, int y_move)
 }
 
 /*************************    		PRIVATE		     *************************/
+
+bool				Entity::_current_position_on_board_is_ok(void)
+{
+	if (this->_pos_y == 0 || this->_pos_x == 0)
+		return (false);
+	if (this->_pos_y == LINES || this->_pos_x == COLONNES)
+		return (false);
+	return (true);
+}
 
 unsigned int		Entity::_check_move(unsigned int current_pos, int move,
 										int pos_max, int pos_min) const
