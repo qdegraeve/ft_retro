@@ -89,6 +89,18 @@ void				Game::player_shoot(Player const & player)
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
 
+void			Game::move_bullets(void)
+{
+	this->_bullet_list = (Bullet *)this->_bullet_list->move_entity(this->_bullet_list);
+	return ;
+}
+
+void			Game::move_ennemy(void)
+{
+	this->_ennemy_list = (Ennemy *)this->_ennemy_list->move_entity(this->_ennemy_list);
+	return ;
+}
+
 /*************************     NON MEMBER FUNTIONS     ************************/
 
 /*************************     EXTERNAL OVERLOADS     *************************/
