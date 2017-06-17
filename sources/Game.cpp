@@ -6,7 +6,7 @@
 
 Game::Game(unsigned int nb_player) :_level(1),
 									_score(0),
-									_nb_enemy_to_shoot(0),
+									_nb_enemy_to_shoot(10),
 									_nb_players(nb_player > NB_MAX_PLAYER ?
 												NB_MAX_PLAYER : nb_player),
 									_nb_ennemy(0), _ennemy_list(NULL),
