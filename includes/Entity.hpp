@@ -41,8 +41,9 @@ class Entity
 		/* Setters */
 		void				set_pos_x(unsigned int new_pos_x);
 		void				set_pos_y(unsigned int new_pos_y);
+		void				set_speed(int new_speed);
 
-		/* Effects */
+		/* Others */
 		void				take_damage(unsigned int amount);
 		void				move(int x_move, int y_move);
 
@@ -59,6 +60,8 @@ class Entity
 
 	private:
 
+		unsigned int				_check_move(unsigned int current_pos, int move,
+										int pos_max, int pos_min) const;
 };
 
 std::ostream &		operator<<(std::ostream & o, Entity const & rhs);
