@@ -8,18 +8,20 @@ class Player : public Entity {
 
 public:
 
-	Player(void);
-	Player(std::string name, int const n);
+	Player(std::string name);
 	Player(Player const & src);
-	~Player();
+	virtual ~Player();
 
-	Player &	operator=(Player const & rhs);
+	Player &		operator=(Player const & rhs);
 
-	std::string	get_name(void) const;
+	/* Getter */
+	std::string		get_name(void) const;
 
-private:
-	std::string	_name;
+	protected:
+		std::string		_name;
 
+	private:
+		Player(void);
 };
 
 std::ostream &		operator<<(std::ostream & o, Player const & rhs);
