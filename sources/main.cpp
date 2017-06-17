@@ -50,10 +50,10 @@ int main()
 					y = max(1, y - 1);
 					break;
 				case KEY_DOWN:
-					y = min(playground.get_lines(), y + 1);
+					y = min(playground.get_lines() - 1, y + 1);
 					break;
 				case KEY_RIGHT:
-					x = min(playground.get_cols(), x + 1);
+					x = min(playground.get_cols() - 1, x + 1);
 					break;
 				case KEY_LEFT:
 					x = max(1, x - 1);

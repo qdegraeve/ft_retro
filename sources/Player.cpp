@@ -3,13 +3,14 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Player::Player(void) : Entity("Player",
+Player::Player(Window *win) : Entity("Player",
 								100,	/* life max */
 								10,		/* damage point */
 								(COLONNES / 2),	/* pos x */
 								LIGNES,		/* pos y */
 								'p',	/* character */
-								-1)		/* speed */
+								-1,
+								win)		/* speed */
 {
 	this->_name = "Player";
 	return ;

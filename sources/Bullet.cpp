@@ -7,7 +7,7 @@ Bullet::Bullet(unsigned int pos_x) : Entity("Bullet", /* type */
 											1,		/* life max */
 											3,		/* damage point */
 											pos_x,	/* pos x */
-											LINES - 1,		/* pos y */
+											LIGNES - 1,		/* pos y */
 											'-',	/* character */
 											2)		/* speed */
 {
