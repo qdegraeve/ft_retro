@@ -18,7 +18,7 @@ class Ennemy : public Entity
 		Ennemy(void);
 		Ennemy &	operator=(Ennemy const & rhs);
 
-		Enemy		*next;
+		Ennemy		*next;
 };
 
 #endif
