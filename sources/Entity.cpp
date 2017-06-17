@@ -1,4 +1,5 @@
 #include "Entity.hpp"
+#include "Game.hpp"
 
 /*************************     CONSTRUCTORS     *******************************/
 
@@ -158,10 +159,13 @@ Entity*				Entity::move_entity_list(Entity* list)
 {
 	Entity			*ptr;
 	Entity			*next;
+	int				old_x, old_y = 0;
 
 	ptr = list;
 	while (ptr)
 	{
+		Game::stock_pos(old_x, old_y, *ptr);
+		ptr->move(1, 0);
 		if (ptr->_current_position_on_board_is_ok() == false)
 		{
 			next = ptr->get_next();
@@ -170,8 +174,9 @@ Entity*				Entity::move_entity_list(Entity* list)
 		}
 		else
 		{
-			ptr->move(0, 1);
-			std::cout << *ptr << std::endl;
+			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ptr->get_character());
+			(void)old_y;
+			(void)old_x;
 			ptr = ptr->get_next();
 		}
 	}
@@ -185,8 +190,8 @@ Entity*				Entity::set_entity_at_end(Entity* list, Entity* to_add)
 	if (list == NULL)
 		return (to_add);
 	ptr = list;
-	while (ptr->_next != NULL)
-		ptr = ptr->_next;
+	while (ptr->get_next() != NULL)
+		ptr = ptr->get_next();
 	ptr->set_next(to_add);
 	to_add->set_next(NULL);
 	return (list);
@@ -268,7 +273,7 @@ bool				Entity::_current_position_on_board_is_ok(void)
 {
 	if (this->_pos_y < 1 || this->_pos_x < 1)
 		return (false);
-	if (this->_pos_y >= _win.get_lines() || this->_pos_x > _win.get_cols())
+	if (this->_pos_y >= _win.get_lines() || this->_pos_x >= _win.get_cols())
 		return (false);
 	return (true);
 }

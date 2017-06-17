@@ -9,7 +9,7 @@ Player::Player(Window const & win) : Entity("Player",
 								(COLONNES / 2),	/* pos x */
 								LIGNES,		/* pos y */
 								'p',	/* character */
-								-1,
+								1,
 								win)		/* speed */
 {
 	this->_name = "Player";

@@ -89,7 +89,7 @@ void				Game::player_shoot(Player const & player)
 {
 	Bullet*			new_bullet;
 
-	new_bullet = new Bullet(player.get_pos_x(), this->_playground);
+	new_bullet = new Bullet(player.get_pos_x(), player.get_pos_y(), this->_playground);
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 }
 
@@ -97,19 +97,18 @@ int					Game::start_game(void) {
 	int c = 0;
 	while (42) {
 		if ((c = wgetch(this->_playground.get_win())) != 27) {
-			mvwaddch(this->_playground.get_win(), this->_players[0]->get_pos_y(), this->_players[0]->get_pos_x(), ' ');
 			switch(c) {
 				case KEY_UP:
-					this->move_player(*this->_players[0], 0, 1);
+					this->move_player(0, 0, -1);
 					break;
 				case KEY_DOWN:
-					this->move_player(*this->_players[0], 0, -1);
+					this->move_player(0, 0, 1);
 					break;
 				case KEY_RIGHT:
-					this->move_player(*this->_players[0], -1, 0);
+					this->move_player(0, 1, 0);
 					break;
 				case KEY_LEFT:
-					this->move_player(*this->_players[0], 1, 0);
+					this->move_player(0, -1, 0);
 					break;
 				case ERR:
 					break;
@@ -118,7 +117,6 @@ int					Game::start_game(void) {
 					break;
 			}
 			flushinp();
-			mvwaddch(this->_playground.get_win(), this->_players[0]->get_pos_y(), this->_players[0]->get_pos_x(), this->_players[0]->get_character());
 			if (this->_bullet_list)
 				mvwaddch(this->_playground.get_win(), this->_bullet_list->get_pos_y(), this->_bullet_list->get_pos_x(), this->_bullet_list->get_character());
 			this->move_bullets();
@@ -129,7 +127,7 @@ int					Game::start_game(void) {
 			std::cout << "Resize is forbidden" << std::endl;
 			break ;
 		}
-		usleep(200000);
+		usleep(100000);
 	}
 	return (0);
 }
@@ -138,21 +136,37 @@ int					Game::start_game(void) {
 
 void			Game::move_bullets(void)
 {
-	this->_bullet_list = (Bullet *)this->_bullet_list->move_entity_list(this->_bullet_list);
+	if (this->_bullet_list)
+		this->_bullet_list->move_entity_list(this->_bullet_list);
 	return ;
 }
 
-void			Game::move_ennemy(void)
+void			Game::move_ennemies(void)
 {
-	this->_ennemy_list = (Ennemy *)this->_ennemy_list->move_entity_list(this->_ennemy_list);
+	if (this->_ennemy_list)
+		this->_ennemy_list->move_entity_list(this->_ennemy_list);
 	return ;
 }
 
-void			Game::move_player(Player & player, int x, int y)
+void			Game::move_player(unsigned int index, int x, int y)
 {
-	player.move(x, y);
+	int old_x, old_y = 0;
+
+	(void)old_y;
+	(void)old_x;
+	Game::stock_pos(old_x, old_y, *this->_players[0]);
+	this->_players[index]->move(x, y);
+	// verif de la position
+	mvwaddch(this->_playground.get_win(), this->_players[0]->get_pos_y(), this->_players[0]->get_pos_x(), this->_players[0]->get_character());
 }
 
 /*************************     NON MEMBER FUNTIONS     ************************/
+
+void			Game::stock_pos(int &x, int &y, Entity &ref)
+{
+	x = ref.get_pos_x();
+	y = ref.get_pos_y();
+	mvwaddch(ref.get_win().get_win(), y, x, ' ');
+}
 
 /*************************     EXTERNAL OVERLOADS     *************************/

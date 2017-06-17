@@ -3,13 +3,14 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Bullet::Bullet(unsigned int pos_x, Window const & win) : Entity("Bullet", /* type */
+Bullet::Bullet(unsigned int pos_x, unsigned int pos_y,
+				Window & win) : Entity("Bullet", /* type */
 											1,		/* life max */
 											3,		/* damage point */
-											pos_x,	/* pos x */
-											LIGNES - 1,		/* pos y */
+											pos_x + 1,	/* pos x */
+											pos_y,	/* pos y */
 											'-',	/* character */
-											-2,		/* speed */
+											2,		/* speed */
 											win)		/* speed */
 {
 	return ;
@@ -25,7 +26,6 @@ Bullet::Bullet(Bullet const & src) : Entity(src)
 
 Bullet::~Bullet(void)
 {
-	std::cout << "Bullet Destructor called" << std::endl;
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/

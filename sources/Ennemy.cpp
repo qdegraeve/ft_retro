@@ -9,7 +9,7 @@ Ennemy::Ennemy(unsigned int pos_x, Window const &win) : Entity("Ennemy",
 											pos_x,	/* pos x */
 											1,		/* pos y */
 											'e',	/* character */
-											1,
+											-1,
 											win)		/* speed */
 {
 	std::cout << "Ennemy constructor called" << std::endl;

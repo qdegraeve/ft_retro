@@ -38,10 +38,10 @@ class Game
 		void				move_bullets(void);
 
 		/* Ennemy */
-		void				move_ennemy(void);
+		void				move_ennemies(void);
 
 		/* Ennemy */
-		void				move_player(Player & Player, int x, int y);
+		void				move_player(unsigned int index, int x, int y);
 
 		Window const &	_menu;
 		Window const &	_playground;
@@ -49,6 +49,8 @@ class Game
 		/* Play interface */
 		int				start_game(void);
 
+		/* Non member functions */
+		static void		stock_pos(int &x, int &y, Entity &ref);
 
 	protected:
 
