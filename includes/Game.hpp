@@ -33,10 +33,10 @@ class Game
 		void				player_shoot(Player const & player);
 
 		/* Bullets */
-		void			move_bullets(void);
+		void				move_bullets(void);
 
 		/* Ennemy */
-		void			move_ennemy(void);
+		void				move_ennemy(void);
 
 	protected:
 
