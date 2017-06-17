@@ -15,7 +15,6 @@ public:
 
 	Player &	operator=(Player const & rhs);
 
-	int			get_n(void) const;
 	std::string	get_name(void) const;
 
 private:
