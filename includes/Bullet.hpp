@@ -7,12 +7,13 @@
 class Bullet : public Entity
 {
 	public:
-		Bullet(void);
+		Bullet(unsigned int pos_x);
 		Bullet(Bullet const & src);
 		virtual ~Bullet();
 
 	private:
 		Bullet &	operator=(Bullet const & rhs);
+		Bullet(void);
 };
 
 #endif

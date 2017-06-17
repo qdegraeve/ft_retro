@@ -128,6 +128,11 @@ void				Entity::set_type(std::string const & new_type)
 	this->_type = new_type;
 }
 
+void				Entity::set_damage_point(unsigned int new_damage_point)
+{
+	this->_damage_point = new_damage_point;
+}
+
 /*************************    		OTHERS		     *************************/
 
 void				Entity::take_damage(unsigned int amount)
@@ -143,8 +148,8 @@ void				Entity::move(int x_move, int y_move)
 	x_move *= this->_speed;
 	y_move *= this->_speed;
 
-	this->_pos_x = this->_check_move(this->_pos_x, x_move, LINES, 0);
-	this->_pos_y = this->_check_move(this->_pos_y, y_move, COLONNES, 0);
+	this->_pos_x = this->_check_move(this->_pos_x, x_move, COLONNES, 0);
+	this->_pos_y = this->_check_move(this->_pos_y, y_move, LINES, 0);
 }
 
 /*************************    		PRIVATE		     *************************/

@@ -4,7 +4,7 @@
 class Game
 {
 	public:
-		Game();									/* constructor by default */
+		Game(unsigned int nb_player);			/* constructor by default */
 		Game(Game const & src);					/* constructor by copy */
 		~Game();								/* destructor */
 

@@ -9,12 +9,13 @@ class Ennemy : public Entity
 
 	public:
 
-		Ennemy(void);
+		Ennemy(unsigned int pos_x);
 		Ennemy(Ennemy const & src);
 		virtual ~Ennemy();
 
 	private:
 
+		Ennemy(void);
 		Ennemy &	operator=(Ennemy const & rhs);
 };
 

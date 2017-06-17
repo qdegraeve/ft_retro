@@ -3,7 +3,13 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Player::Player(std::string name) : Entity("Player", 100, 10, 0, 0, 'p', 1)
+Player::Player(std::string name) : Entity("Player",
+											100,	/* life max */
+											10,		/* damage point */
+											(COLONNES / 2),	/* pos x */
+											LINES,		/* pos y */
+											'p',	/* character */
+											-1)		/* speed */
 {
 	this->_name = name;
 	std::cout << "Player constructor called" << std::endl;
@@ -31,14 +37,7 @@ Player &	Player::operator=(Player const & rhs) {
 	std::cout << "Assignation operator called for Player" << std::endl;
 	if (this != &rhs)
 	{
-		this->_type = rhs.get_type();
-		this->_life_max = rhs.get_life_max();
-		this->_life = rhs.get_life();
-		this->_damage_point = rhs.get_damage_point();
-		this->_pos_x = rhs.get_pos_x();
-		this->_pos_y = rhs.get_pos_y();
-		this->_character = rhs.get_character();
-		this->_speed = rhs.get_speed();
+		(Entity)(*this) = (Entity)rhs;
 		this->_name = rhs.get_name();
 	}
 	return (*this);

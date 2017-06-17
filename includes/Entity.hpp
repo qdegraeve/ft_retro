@@ -4,7 +4,7 @@
 #include <iostream>
 
 #ifndef LINES
-# define LINES 10
+# define LINES 20
 #endif
 #ifndef COLONNES
 # define COLONNES 10
@@ -39,6 +39,7 @@ class Entity
 		int					get_speed() const;
 
 		/* Setters */
+		void				set_damage_point(unsigned int damage_point);
 		void				set_pos_x(unsigned int new_pos_x);
 		void				set_pos_y(unsigned int new_pos_y);
 		void				set_speed(int new_speed);
