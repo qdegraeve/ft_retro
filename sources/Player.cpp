@@ -45,14 +45,19 @@ Player &	Player::operator=(Player const & rhs) {
 
 /*************************     GETTERS      ***********************************/
 
-/*************************     SETTERS      ***********************************/
-
-/*************************     PUBLIC MEMBER FUNCTIONS      *******************/
-
-std::string	Player::get_name(void) const
+std::string	const	Player::get_name(void) const
 {
 	return (this->_name);
 }
+
+/*************************     SETTERS      ***********************************/
+
+void				Player::set_name(std::string const & name)
+{
+	this->_name = name;
+}
+
+/*************************     PUBLIC MEMBER FUNCTIONS      *******************/
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
 

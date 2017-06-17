@@ -15,7 +15,10 @@ public:
 	Player &		operator=(Player const & rhs);
 
 	/* Getter */
-	std::string		get_name(void) const;
+	std::string	const	get_name(void) const;
+
+	/* Setter */
+	void				set_name(std::string const & name);
 
 	protected:
 		std::string		_name;
