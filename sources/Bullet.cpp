@@ -3,38 +3,37 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Bullet::Bullet(void) {
-
+Bullet::Bullet(void) : Entity("Bullet", /* type */
+								1,		/* life max */
+								2,		/* damage point */
+								0,		/* pos x */
+								0,		/* pos y */
+								'-',	/* character */
+								2)		/* speed */
+{
 	std::cout << "Default constructor called" << std::endl;
 	return ;
 }
 
-Bullet::Bullet(Bullet const & src) {
-
+Bullet::Bullet(Bullet const & src) : Entity(src)
+{
 	std::cout << "Copy constructor called" << std::endl;
 	*this = src;
-
 	return ;
 }
 
 /*************************     DESTRUCTORS     ********************************/
 
-Bullet::~Bullet(void) {
+Bullet::~Bullet(void)
+{
 	std::cout << "Destructor called" << std::endl;
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/
 
-Bullet &	Bullet::operator=(Bullet const & rhs) {
-
-	std::cout << "Assignation operator called" << std::endl;
-	if (this != &rhs) {
-		this->_pos_x = rhs.get_pos_x();
-		this->_pos_x = rhs.get_pos_y();
-		this->_speed = rhs.get_speed();
-		this->_life = rhs.get_life();
-	}
-
+Bullet &	Bullet::operator=(Bullet const & rhs)
+{
+	(void)rhs;
 	return *this;
 }
 
