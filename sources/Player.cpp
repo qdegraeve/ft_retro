@@ -3,50 +3,61 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Player::Player(void) {
-
-	std::cout << "Default constructor called" << std::endl;
+Player::Player(std::string name) : Entity("Player",
+											100,	/* life max */
+											10,		/* damage point */
+											(COLONNES / 2),	/* pos x */
+											LINES,		/* pos y */
+											'p',	/* character */
+											-1)		/* speed */
+{
+	this->_name = name;
+	std::cout << "Player constructor called" << std::endl;
 	return ;
 }
 
-Player::Player(Player const & src) {
+Player::Player(Player const & src) : Entity(src)
+{
 
-	std::cout << "Copy constructor called" << std::endl;
+	std::cout << "Player Copy constructor called" << std::endl;
 	*this = src;
-
 	return ;
 }
 
 /*************************     DESTRUCTORS     ********************************/
 
 Player::~Player(void) {
-	std::cout << "Destructor called" << std::endl;
+	std::cout << "Player Destructor called" << std::endl;
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/
 
 Player &	Player::operator=(Player const & rhs) {
 
-	std::cout << "Assignation operator called" << std::endl;
-	if (this != &rhs) {
-		this->_pos_x = rhs.get_pos_x();
-		this->_pos_x = rhs.get_pos_y();
-		this->_speed = rhs.get_speed();
-		this->_life = rhs.get_life();
+	std::cout << "Assignation operator called for Player" << std::endl;
+	if (this != &rhs)
+	{
+		(Entity)(*this) = (Entity)rhs;
+		this->_name = rhs.get_name();
 	}
-	
-	return *this;
+	return (*this);
 }
 
 /*************************     GETTERS      ***********************************/
 
-/*************************     SETTERS      ***********************************/
-
-/*************************     PUBLIC MEMBER FUNCTIONS      *******************/
-
-std::string	Player::get_name(void) const {
+std::string	const	Player::get_name(void) const
+{
 	return (this->_name);
 }
+
+/*************************     SETTERS      ***********************************/
+
+void				Player::set_name(std::string const & name)
+{
+	this->_name = name;
+}
+
+/*************************     PUBLIC MEMBER FUNCTIONS      *******************/
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
 
@@ -54,9 +65,9 @@ std::string	Player::get_name(void) const {
 
 /*************************     EXTERNAL OVERLOADS     *************************/
 
-std::ostream &		operator<<(std::ostream & o, Player const & rhs) {
-	o << rhs.get_name();
-
+std::ostream &		operator<<(std::ostream & o, Player const & rhs)
+{
+	o << rhs.get_name() << " " << (Entity)rhs;
 	return (o);
 }
 
