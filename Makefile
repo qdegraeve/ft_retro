@@ -21,7 +21,7 @@ O_DIR = .tmp/
 
 ### TO COMPLETE ###
 
-CORE = main.cpp
+CORE = main.cpp Entity.cpp
 SRC_CORE = $(addprefix $(CPP_DIR)/, $(CORE))
 
 ### END ###
@@ -39,7 +39,7 @@ prepare:
 
 $(O_DIR)%.o: %.cpp
 	@printf "[\033[32;1m $(NAME) \033[0m]\t\033[31;1m$<\033[0m\\n"
-	@clang++ $(FLAGS) -o $@ -c $<
+	@clang++ $(FLAGS) $(INCLUDES) -o $@ -c $<
 
 $(NAME): $(O_FILES)
 	@clang++ $(FLAGS) -o $(NAME) $(O_FILES)

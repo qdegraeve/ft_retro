@@ -34,7 +34,7 @@ Bullet &	Bullet::operator=(Bullet const & rhs) {
 		this->_speed = rhs.get_speed();
 		this->_life = rhs.get_life();
 	}
-	
+
 	return *this;
 }
 
