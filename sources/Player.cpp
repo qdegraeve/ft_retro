@@ -3,15 +3,15 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Player::Player(std::string name) : Entity("Player",
-											100,	/* life max */
-											10,		/* damage point */
-											(COLONNES / 2),	/* pos x */
-											LINES,		/* pos y */
-											'p',	/* character */
-											-1)		/* speed */
+Player::Player(void) : Entity("Player",
+								100,	/* life max */
+								10,		/* damage point */
+								(COLONNES / 2),	/* pos x */
+								LINES,		/* pos y */
+								'p',	/* character */
+								-1)		/* speed */
 {
-	this->_name = name;
+	this->_name = "Player";
 	std::cout << "Player constructor called" << std::endl;
 	return ;
 }

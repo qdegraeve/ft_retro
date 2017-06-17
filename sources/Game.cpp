@@ -3,16 +3,13 @@
 #include <sstream>
 
 Game::Game(unsigned int nb_player) : _nb_players(nb_player > NB_MAX_PLAYER ?
-												NB_MAX_PLAYER : nb_player)
-{
-	unsigned int			i;
-	std::stringstream		new_name;
+												NB_MAX_PLAYER : nb_player),
+									_players(new Player[this->_nb_players]),
+									_nb_enemy(0), _enemy_list(NULL),
+									_nb_bullet(0), _bullet_list(NULL)
 
-	for (i = 0; i < this->_nb_players; ++i)
-	{
-		new_name << "Player" << i;
-		this->_players[i] = new Player(new_name.str());
-	}
+{
+	std::cout << "Game constructor called" << std::endl;
 	return ;
 }
 
@@ -24,12 +21,8 @@ Game::Game(Game const & src)
 
 Game::~Game()
 {
-	unsigned int		i;
-
-	for (i = 0; i < this->_nb_players; ++i)
-	{
-		delete this->_players[i];
-	}
+	std::cout << "Game constructor called" << std::endl;
+	delete [] this->_players;
 	return ;
 }
 
@@ -52,12 +45,17 @@ Player&				Game::get_player(unsigned int index) const
 {
 	if (index >= this->_nb_players)
 		index = this->_nb_players - 1;
-	return (*(this->_players[index]));
+	return (this->_players[index]);
 }
 
 /*************************     SETTERS      ***********************************/
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/
+
+void				GenerateEnemy(void)
+{
+	return ;
+}
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
 
