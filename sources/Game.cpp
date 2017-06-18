@@ -3,9 +3,9 @@
 #include <sstream>
 #include <time.h>
 
-Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE, 
+Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE,
 													  COLS - (OUTSPACE * 2))),
-									_playground(*new Window(LINES - BEGIN_PG - WIN_SPACE, 
+									_playground(*new Window(LINES - BEGIN_PG - WIN_SPACE,
 															BEGIN_PG, COLS - (OUTSPACE * 2))),
 									_level(1),
 									_score(0),
@@ -22,9 +22,9 @@ Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE,
 	return ;
 }
 
-Game::Game(Game const & src) : _menu(*new Window(HEIGHT_MENU, WIN_SPACE, 
+Game::Game(Game const & src) : _menu(*new Window(HEIGHT_MENU, WIN_SPACE,
 												COLS - (OUTSPACE * 2))),
-								_playground(*new Window(LINES - BEGIN_PG, 
+								_playground(*new Window(LINES - BEGIN_PG,
 														BEGIN_PG, COLS - (OUTSPACE * 2)))
 {
 	*this = src;
@@ -254,9 +254,9 @@ bool			Game::meet_bullets(Entity *entity, int old_x, int old_y)
 	ptr = this->_bullet_list;
 	while (ptr)
 	{
-		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) && 
+		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
 			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
-		{			
+		{
 			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
 			this->_bullet_list = (Bullet*)Entity::delete_one_entity_on_list(this->_bullet_list, ptr);
 			return (true);
@@ -297,7 +297,7 @@ bool		Game::exit_game(int c)
 	if (c == 27 || c == KEY_RESIZE)
 	{
 		Window		*pause = new Window(20, LINES / 2 - 20, 50);
-		mvwprintw(pause->get_win(), pause->get_lines() / 2, pause->get_cols() / 2 - 10, "JEU EN PAUSE");
+		mvwprintw(pause->get_win(), pause->get_lines() / 2, (pause->get_cols() - sizeof("JEU EN PAUSE")) / 2, "JEU EN PAUSE");
 		nodelay(pause->get_win(), false);
 		keypad(pause->get_win(), TRUE);
 		c = wgetch(pause->get_win());
