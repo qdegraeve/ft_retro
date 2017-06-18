@@ -15,4 +15,5 @@ class StarHunter : public Ennemy
 		StarHunter & operator=(StarHunter const & rhs);		/* overload operator = */
 
 };
+
 #endif /* STAR_HUNTER_HPP */

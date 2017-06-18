@@ -3,16 +3,17 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Ennemy::Ennemy(unsigned int pos_y, int color,
-				int speed, unsigned int shoot_frame,
+Ennemy::Ennemy(unsigned int pos_y, int life_max, int damage_point,
+				int color, int speed, unsigned int shoot_frame,
 				Window const &win) : Entity("Ennemy",
-											2,		/* life max */
-											2,		/* damage point */
+											life_max,		/* life max */
+											damage_point,			/* damage point */
 											win.get_cols() - 1,		/* pos x */
 											pos_y,	/* pos y */
 											'e',	/* character */
 											speed,	/* speed */
 											color,	/* color */
+											false,	/* is ally */
 											win)
 {
 	this->_shoot_frame = shoot_frame;

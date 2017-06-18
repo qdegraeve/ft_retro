@@ -1,10 +1,14 @@
 #include "StarHunter.hpp"
 
+/*************************     CONSTRUCTORS     *******************************/
+
 StarHunter::StarHunter(unsigned int pos_x,
 						Window const &win) : Ennemy(pos_x,
-													COLOR_PAIR(2),
-													-1,
-													50,
+													1,				/* life */
+													1,				/* damage */
+													COLOR_PAIR(2),	/* color */
+													-1,				/* speed */
+													50,				/* shoot frame */
 													win)
 {
 	return ;
@@ -16,22 +20,16 @@ StarHunter::StarHunter(StarHunter const & src) : Ennemy(src)
 	return ;
 }
 
+/*************************     DESTRUCTORS     ********************************/
+
 StarHunter::~StarHunter()
 {
 	return ;
 }
 
-/*
-**  	------------------------------------------------------
-**  	|					OVERLOAD OPERATORS				 |
-**  	------------------------------------------------------
-*/
+/*************************     OPERATORS OVERLOAD     *************************/
 StarHunter & StarHunter::operator=(StarHunter const & rhs)
 {
 	(void)rhs;
 	return (*this);
 }
-
-/*
-** Implementation
-*/

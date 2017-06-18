@@ -1,4 +1,7 @@
 #include "Game.hpp"
+#include "StarHunter.hpp"
+#include "Crusader.hpp"
+#include "Asteroid.hpp"
 
 #include <sstream>
 #include <time.h>
@@ -85,7 +88,7 @@ void				Game::generate_ennemy(void)
 	{
 		fprintf(stderr, "nb ennemies == %d\n", this->_nb_ennemy);
 		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
-		new_ennemy = new Ennemy(positions[i], COLOR_BLUE | WA_BOLD, -1, 50, this->_playground);
+		new_ennemy = new StarHunter(positions[i], this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
 }
@@ -94,7 +97,7 @@ void				Game::player_shoot(Player const & player)
 {
 	Bullet*			new_bullet;
 
-	new_bullet = new Bullet(player.get_pos_x(), player.get_pos_y(), 2, COLOR_MAGENTA | WA_BOLD, this->_playground);
+	new_bullet = new Bullet(true, player.get_pos_x(), player.get_pos_y(), 2, COLOR_MAGENTA | WA_BOLD, this->_playground);
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 }
 
@@ -111,7 +114,8 @@ void				Game::ennemies_shoot(void)
 			if (ptr->get_nb_shoot() == 0)
 			{
 				std::cerr << "new bullet" << std::endl;
-				new_bullet = new Bullet(ptr->get_pos_x() - 2,
+				new_bullet = new Bullet(false,
+										ptr->get_pos_x() - 2,
 										ptr->get_pos_y(),
 										-2,
 										COLOR_MAGENTA | WA_BOLD,
@@ -285,7 +289,8 @@ bool			Game::meet_player(Entity *entity, int old_x, int old_y)
 	for (unsigned int i = 0; i < this->_nb_players; ++i)
 	{
 		ptr = this->_players[i];
-		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
+		if (ptr->get_is_ally() != entity->get_is_ally() &&
+			(min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
 			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
 		{
 			ptr->take_damage(entity->get_damage_point());
@@ -310,7 +315,8 @@ bool			Game::meet_bullets(Entity *entity, int old_x, int old_y)
 	ptr = this->_bullet_list;
 	while (ptr)
 	{
-		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
+		if (ptr->get_is_ally() != entity->get_is_ally() &&
+			(min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
 			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
 		{
 			ptr->take_damage(entity->get_damage_point());
@@ -340,7 +346,8 @@ bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y)
 	ptr = this->_ennemy_list;
 	while (ptr)
 	{
-		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
+		if (ptr->get_is_ally() != entity->get_is_ally() &&
+			(min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
 			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
 		{
 			ptr->take_damage(entity->get_damage_point());

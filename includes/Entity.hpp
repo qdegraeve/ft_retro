@@ -23,6 +23,7 @@ class Entity
 				unsigned char character,
 				int speed,
 				int color,
+				bool is_ally,
 				Window const & win);								/* constructor by default */
 		Entity(Entity const & src);						/* constructor by copy */
 		/* destructor */
@@ -41,6 +42,7 @@ class Entity
 		unsigned char		get_character() const;
 		int					get_speed() const;
 		int					get_color() const;
+		bool				get_is_ally() const;
 		Entity*				get_next() const;
 		Window const &		get_win() const;
 
@@ -79,6 +81,7 @@ class Entity
 			unsigned char			_character;
 			int						_speed;
 			int						_color;
+			bool					_is_ally;
 
 			Window const &			_win;
 			Entity*					_next;

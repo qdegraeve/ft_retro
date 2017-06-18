@@ -11,6 +11,7 @@ Player::Player(int color, Window const & win) : Entity("Player",
 								'p',	/* character */
 								1,		/* speed */
 								color,
+								true,	/* is ally */
 								win)
 {
 	this->_name = "Player";

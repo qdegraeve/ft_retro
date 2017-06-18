@@ -10,6 +10,8 @@ class Ennemy : public Entity
 	public:
 
 		Ennemy(unsigned int pos_x,
+				int life_max,
+				int damage_point,
 				int color,
 				int speed,
 				unsigned int shoot_frame,

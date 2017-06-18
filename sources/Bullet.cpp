@@ -3,7 +3,7 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Bullet::Bullet(unsigned int pos_x, unsigned int pos_y,
+Bullet::Bullet(bool is_ally, unsigned int pos_x, unsigned int pos_y,
 				int speed, int color,
 				Window const & win) : Entity("Bullet", /* type */
 											1,		/* life max */
@@ -13,6 +13,7 @@ Bullet::Bullet(unsigned int pos_x, unsigned int pos_y,
 											'-',	/* character */
 											speed,		/* speed */
 											color,	/* color */
+											is_ally,
 											win)
 {
 	return ;
