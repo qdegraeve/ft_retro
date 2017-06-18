@@ -130,8 +130,8 @@ int					Game::start_game(void) {
 		}
 		if (this->exit_game(c) == 1)
 			break;
-		werase(this->_playground.get_win());
-		box(this->_playground.get_win(), 0, 0);
+		//werase(this->_playground.get_win());
+		//box(this->_playground.get_win(), 0, 0);
 		this->generate_ennemy();
 		this->move_ennemies();
 		this->move_bullets();
@@ -250,8 +250,12 @@ bool			Game::meet_player(Entity *entity, int old_x, int old_y)
 		ptr = this->_players[i];
 		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
 			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
+		{
+			ptr->take_damage(entity->get_damage_point());
+			entity->take_damage(ptr->get_damage_point());
+
 			return (true);
-		ptr = ptr->get_next();
+		}
 	}
 	return (false);
 }
@@ -328,6 +332,8 @@ bool		Game::exit_game(int c)
 		c = wgetch(pause->get_win());
 		if (c == 27 || c == KEY_RESIZE)
 			quit = true;
+		werase(pause->get_win());
+		wrefresh(pause->get_win());
 		delete(pause);
 	}
 	return (quit);
