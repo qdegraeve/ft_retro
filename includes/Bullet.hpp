@@ -7,7 +7,8 @@
 class Bullet : public Entity
 {
 	public:
-		Bullet(unsigned int pos_x, unsigned int pos_y, int color,
+		Bullet(unsigned int pos_x, unsigned int pos_y,
+				int speed, int color,
 				 Window const & win);
 		Bullet(Bullet const & src);
 		virtual ~Bullet();

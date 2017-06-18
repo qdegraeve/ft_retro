@@ -85,7 +85,7 @@ void				Game::generate_ennemy(void)
 	{
 		fprintf(stderr, "nb ennemies == %d\n", this->_nb_ennemy);
 		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
-		new_ennemy = new Ennemy(positions[i], COLOR_BLUE | WA_BOLD, this->_playground);
+		new_ennemy = new Ennemy(positions[i], COLOR_BLUE | WA_BOLD, -1, 0, this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
 }
@@ -94,9 +94,14 @@ void				Game::player_shoot(Player const & player)
 {
 	Bullet*			new_bullet;
 
-	new_bullet = new Bullet(player.get_pos_x(), player.get_pos_y(), COLOR_MAGENTA | WA_BOLD, this->_playground);
+	new_bullet = new Bullet(player.get_pos_x(), player.get_pos_y(), 2, COLOR_MAGENTA | WA_BOLD, this->_playground);
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 }
+
+// void				Game::ennemy_shoot(void)
+// {
+
+// }
 
 int					Game::start_game(void) {
 	int		c = 0;

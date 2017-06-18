@@ -3,18 +3,20 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Ennemy::Ennemy(unsigned int pos_y, int color, Window const &win) : Entity("Ennemy",
+Ennemy::Ennemy(unsigned int pos_y, int color,
+				int speed, unsigned int shoot_frame,
+				Window const &win) : Entity("Ennemy",
 											2,		/* life max */
 											2,		/* damage point */
 											win.get_cols() - 1,		/* pos x */
 											pos_y,	/* pos y */
 											'e',	/* character */
-											-1,		/* speed */
+											speed,	/* speed */
 											color,	/* color */
 											win)
 {
-		fprintf(stderr, "constructeur , pos x == %d\n", this->_pos_x );
-
+	this->_shoot_frame = shoot_frame;
+	this->_nb_shoot = 0;
 	return ;
 }
 
@@ -41,7 +43,25 @@ Ennemy &	Ennemy::operator=(Ennemy const & rhs)
 
 /*************************     GETTERS      ***********************************/
 
+unsigned int			Ennemy::get_shoot_frame(void) const
+{
+	return (this->_shoot_frame);
+}
+
+unsigned int			Ennemy::get_nb_shoot(void) const
+{
+	return (this->_shoot_frame);
+}
+
 /*************************     SETTERS      ***********************************/
+
+void				Ennemy::set_nb_shoot(unsigned int nb_shoot)
+{
+	if (nb_shoot > this->_shoot_frame)
+		this->_nb_shoot = this->_shoot_frame;
+	else
+		this->_nb_shoot = nb_shoot;
+}
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/
 

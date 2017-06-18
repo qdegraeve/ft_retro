@@ -3,14 +3,15 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Bullet::Bullet(unsigned int pos_x, unsigned int pos_y, int color,
+Bullet::Bullet(unsigned int pos_x, unsigned int pos_y,
+				int speed, int color,
 				Window const & win) : Entity("Bullet", /* type */
 											1,		/* life max */
 											1,		/* damage point */
 											pos_x + 1,	/* pos x */
 											pos_y,	/* pos y */
 											'-',	/* character */
-											2,		/* speed */
+											speed,		/* speed */
 											color,	/* color */
 											win)
 {
