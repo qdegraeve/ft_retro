@@ -1,6 +1,6 @@
 NAME=ft_retro
 
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 INCLUDES= -I includes/
 
 CPP_DIR=sources
