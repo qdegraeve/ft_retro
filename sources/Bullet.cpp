@@ -3,7 +3,7 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Bullet::Bullet(unsigned int pos_x, unsigned int pos_y,
+Bullet::Bullet(unsigned int pos_x, unsigned int pos_y, int color,
 				Window const & win) : Entity("Bullet", /* type */
 											1,		/* life max */
 											1,		/* damage point */
@@ -11,7 +11,8 @@ Bullet::Bullet(unsigned int pos_x, unsigned int pos_y,
 											pos_y,	/* pos y */
 											'-',	/* character */
 											2,		/* speed */
-											win)		/* speed */
+											color,	/* color */
+											win)
 {
 	return ;
 }

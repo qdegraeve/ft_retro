@@ -9,7 +9,7 @@ class Ennemy : public Entity
 
 	public:
 
-		Ennemy(unsigned int pos_x, Window const & win);
+		Ennemy(unsigned int pos_x, int color, Window const & win);
 		Ennemy(Ennemy const & src);
 		virtual ~Ennemy();
 

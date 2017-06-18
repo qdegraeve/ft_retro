@@ -10,6 +10,7 @@ Entity::Entity(std::string type,
 				unsigned int pos_y,
 				unsigned char character,
 				int speed,
+				int color,
 				Window const & win) : _type(type),
 								_life_max(life_max),
 								_life(life_max),
@@ -18,6 +19,7 @@ Entity::Entity(std::string type,
 								_pos_y(pos_y),
 								_character(character),
 								_speed(speed),
+								_color(color),
 								_win(win),
 								_next(NULL)
 {
@@ -109,6 +111,11 @@ unsigned char		Entity::get_character() const
 int					Entity::get_speed(void) const
 {
 	return (this->_speed);
+}
+
+int					Entity::get_color(void) const
+{
+	return (this->_color);
 }
 
 Entity*				Entity::get_next(void) const
