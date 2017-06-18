@@ -10,7 +10,7 @@ Ennemy::Ennemy(unsigned int pos_y, int color, Window const &win) : Entity("Ennem
 											pos_y,	/* pos y */
 											'e',	/* character */
 											-1,		/* speed */
-											color,	/* color */
+											color | WA_BOLD,	/* color */
 											win)
 {
 		fprintf(stderr, "constructeur , pos x == %d\n", this->_pos_x );

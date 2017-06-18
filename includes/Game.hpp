@@ -15,6 +15,14 @@
 # define MAX_ENEMIES_PER_TURN (PLAYGROUND_HEIGHT / 16)
 # define ENNEMY_SLOT_SIZE(x) (PLAYGROUND_HEIGHT / x)
 # define TARGET_SLEEP 20
+# define PAUSE_MENU_WIDTH 50
+# define WRITE_CENTER(length) ((PAUSE_MENU_WIDTH - length) / 2)
+
+# define FT_RED 1
+# define FT_MAGENTA 2
+# define FT_GREEN 3
+# define FT_BLUE 4
+# define FT_YELLOW 5
 
 class Game
 {
@@ -53,9 +61,14 @@ class Game
 
 		/* Play interface */
 		int				start_game(void);
-		bool			exit_game(int c);
+		bool			pause_menu(void);
+		bool			send_action(WINDOW *win);
+		bool			exit_game(void);
+		bool			resume(void);
+		bool			new_game();
 		void			menu_window(void);
 		bool			players_alive(void);
+
 
 		/* Non member functions */
 		static void		stock_pos(int &x, int &y, Entity &ref);

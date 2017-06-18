@@ -4,10 +4,10 @@
 /*************************     CONSTRUCTORS     *******************************/
 
 Player::Player(int color, Window const & win) : Entity("Player",
-								10,	/* life max */
+								PLAYER_LIFE_MAX,	/* life max */
 								10,		/* damage point */
-								(COLONNES / 2),	/* pos x */
-								LIGNES,		/* pos y */
+								1,	/* pos x */
+								win.get_lines() / 2,		/* pos y */
 								'p',	/* character */
 								1,		/* speed */
 								color,
@@ -85,6 +85,17 @@ void				Player::increase_score(unsigned int amount)
 void				Player::increase_level(unsigned int amount)
 {
 	this->_level += amount;
+}
+
+void				Player::reset_player()
+{
+	this->_life = PLAYER_LIFE_MAX;
+	this->_level = 1;
+	this->_score = 0;
+	this->_nb_ennemy_to_shoot = 10;
+	this->_pos_x = 1;
+	this->_pos_y = this->_win.get_lines() / 2;
+
 }
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/

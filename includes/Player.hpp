@@ -4,6 +4,8 @@
 # include <string>
 # include "Entity.hpp"
 
+# define PLAYER_LIFE_MAX 10
+
 class Player : public Entity {
 
 public:
@@ -24,6 +26,7 @@ public:
 	void				set_name(std::string const & name);
 	void				increase_score(unsigned int amount);
 	void				increase_level(unsigned int amount);
+	void				reset_player();
 
 	virtual void		move(int x_move, int y_move);
 

@@ -14,7 +14,7 @@ Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE,
 {
 	srand(time(NULL));
 	for(unsigned int i=0; i < nb_player; i++)
-		this->_players[i] = new Player(i + 1, this->_playground);
+		this->_players[i] = new Player(COLOR_PAIR(i + 1), this->_playground);
 	return ;
 }
 
@@ -85,7 +85,7 @@ void				Game::generate_ennemy(void)
 	{
 		fprintf(stderr, "nb ennemies == %d\n", this->_nb_ennemy);
 		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
-		new_ennemy = new Ennemy(positions[i], COLOR_BLUE | WA_BOLD, this->_playground);
+		new_ennemy = new Ennemy(positions[i], COLOR_PAIR(FT_GREEN), this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
 }
@@ -94,7 +94,7 @@ void				Game::player_shoot(Player const & player)
 {
 	Bullet*			new_bullet;
 
-	new_bullet = new Bullet(player.get_pos_x(), player.get_pos_y(), COLOR_MAGENTA | WA_BOLD, this->_playground);
+	new_bullet = new Bullet(player.get_pos_x(), player.get_pos_y(), COLOR_PAIR(FT_YELLOW), this->_playground);
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 }
 
@@ -108,7 +108,8 @@ int					Game::start_game(void) {
 		clock = std::clock();
 		if (this->players_alive() == false)
 		{
-			return (this->exit_game(-42));
+			this->new_game();
+			this->new_game();
 		}
 		if ((c = wgetch(this->_playground.get_win())) != 27) {
 			switch(c) {
@@ -132,8 +133,13 @@ int					Game::start_game(void) {
 			}
 			flushinp();
 		}
-		if (this->exit_game(c) == 1)
-			break;
+		if (c == 27 || c == KEY_RESIZE || !this->players_alive())
+		{
+			if (!this->players_alive())
+				this->new_game();
+			if (this->pause_menu())
+				break;
+		}	
 		this->generate_ennemy();
 		this->move_ennemies();
 		this->move_bullets();
@@ -191,10 +197,10 @@ void			Game::move_player(unsigned int index, int x, int y)
 	this->_players[index]->move(x, y);
 	this->_collision(2, this->_players[index], old_x, old_y);
 	// verif de la position
-	wattron(this->_playground.get_win(), this->_players[index]->get_color() | WA_BLINK);
+	wattron(this->_playground.get_win(), this->_players[index]->get_color() | WA_BOLD);
 	mvwaddch(this->_playground.get_win(), this->_players[index]->get_pos_y(),
 			this->_players[index]->get_pos_x(), this->_players[index]->get_character());
-	wattroff(this->_playground.get_win(), this->_players[index]->get_color() | WA_BLINK);
+	wattroff(this->_playground.get_win(), this->_players[index]->get_color() | WA_BOLD);
 }
 
 Entity*			Game::move_entity_list(Entity* list, int const i)
@@ -208,7 +214,6 @@ Entity*			Game::move_entity_list(Entity* list, int const i)
 	while (ptr)
 	{
 		Game::stock_pos(old_x, old_y, *ptr);
-		mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
 		ptr->move(1, 0);
 		if (ptr->current_position_on_board_is_ok() == false || this->_collision(i, ptr, old_x, old_y))
 		{
@@ -218,7 +223,9 @@ Entity*			Game::move_entity_list(Entity* list, int const i)
 		}
 		else
 		{
+			wattron(this->_playground.get_win(), ptr->get_color() | WA_BOLD);
 			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ptr->get_character());
+			wattroff(this->_playground.get_win(), ptr->get_color() | WA_BOLD);
 			(void)old_y;
 			(void)old_x;
 			ptr = ptr->get_next();
@@ -328,23 +335,90 @@ bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y)
 	return (false);
 }
 
-bool		Game::exit_game(int c)
+bool		Game::pause_menu(void)
 {
-	bool	quit = false;
-	if (c == 27 || c == KEY_RESIZE || c == -42)
-	{
-		Window		*pause = new Window(20, LINES / 2 - 20, 50);
-		mvwprintw(pause->get_win(), pause->get_lines() / 2, (pause->get_cols() - sizeof("JEU EN PAUSE")) / 2, "JEU EN PAUSE");
-		nodelay(pause->get_win(), false);
-		keypad(pause->get_win(), TRUE);
-		c = wgetch(pause->get_win());
-		if (c == 27 || c == KEY_RESIZE)
-			quit = true;
-		werase(pause->get_win());
-		wrefresh(pause->get_win());
-		delete(pause);
-	}
+	Window		*pause = new Window(20, LINES / 2 - 20, 50);
+	bool		quit = false;
+	mvwprintw(pause->get_win(), 4, WRITE_CENTER(sizeof("JEU EN PAUSE")),  "JEU EN PAUSE");
+	quit = this->send_action(pause->get_win());
+	werase(pause->get_win());
+	wrefresh(pause->get_win());
+	delete(pause);
 	return (quit);
+}
+
+typedef bool		(Game::*action)(void);
+bool				Game::send_action(WINDOW *win)
+{
+	action			tab[] = {&Game::new_game,
+						 &Game::resume,
+						 &Game::exit_game};
+	std::string		choices[] = {"NEW GAME", "RESUME", "EXIT"};
+	int				lines = 6;
+	unsigned int	highlight = 0;
+	int				c;
+
+	nodelay(win, false);
+	keypad(win, TRUE);
+	while (42) {
+		wattron(win, COLOR_PAIR(FT_BLUE) | WA_BOLD);
+		for (unsigned int i = 0; i < 3; ++i)
+		{
+			if (i == highlight)
+				wattron(win, WA_REVERSE);
+			mvwprintw(win, lines += 2, WRITE_CENTER(choices[i].length()),  choices[i].c_str());
+			wattroff(win, WA_REVERSE);
+		}
+		wattroff(win, COLOR_PAIR(FT_BLUE) | WA_BOLD);
+		lines = 6;
+		c = wgetch(win);
+		switch(c) {
+			case KEY_UP:
+				highlight = highlight == 0 ? 3 : highlight - 1;
+				break;
+			case KEY_DOWN:
+				highlight = (highlight + 1) % 3;
+				this->move_player(0, 0, 1);
+				break;
+			case 27:
+				return (this->exit_game());
+			case KEY_RESIZE:
+				return (this->exit_game());
+			case 10:
+				return ((this->*tab[highlight])());
+			case ERR:
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+
+bool		Game::new_game()
+{
+	Entity::delete_entity_list(this->_ennemy_list);
+	this->_ennemy_list = NULL;
+	Entity::delete_entity_list(this->_bullet_list);
+	this->_bullet_list = NULL;
+	werase(this->_playground.get_win());
+	box(this->_playground.get_win(), 0, 0);
+	wrefresh(this->_playground.get_win());
+	for (unsigned int i = 0; i < this->_nb_players; ++i)
+	{
+		this->_players[i]->reset_player();
+	}
+	return (false);
+}
+
+bool		Game::resume()
+{
+	return (false);
+}
+
+bool		Game::exit_game()
+{
+	return (true);
 }
 
 /*************************     NON MEMBER FUNTIONS     ************************/
