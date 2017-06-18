@@ -13,7 +13,8 @@
 # define WIN_SPACE 2
 # define BEGIN_PG (HEIGHT_MENU + 4)
 # define PLAYGROUND_HEIGHT (LINES - BEGIN_PG - WIN_SPACE)
-# define MAX_ENEMIES_PER_TURN (PLAYGROUND_HEIGHT / 16)
+# define RATIO_MAX 60
+# define MAX_ENEMIES_PER_TURN(x) ((PLAYGROUND_HEIGHT / (RATIO_MAX - (2 * x)) + 2))
 # define ENNEMY_SLOT_SIZE(x) (PLAYGROUND_HEIGHT / x)
 # define TARGET_SLEEP 20
 # define PAUSE_MENU_WIDTH 50
@@ -37,6 +38,9 @@ class Game
 
 		/* Ennemy functions */
 		void				generate_ennemy(void);
+		void				new_star_hunter(unsigned int const i);
+		void				new_crusader(unsigned int const i);
+		void				new_asteroid(unsigned int const i);
 
 		/* Player functions */
 		void				move_player();

@@ -6,7 +6,7 @@ StarHunter::StarHunter(unsigned int pos_x,
 						Window const &win) : Ennemy(pos_x,
 													1,				/* life */
 													1,				/* damage */
-													COLOR_PAIR(2),	/* color */
+													COLOR_PAIR(FT_BLUE),	/* color */
 													-1,				/* speed */
 													50,				/* shoot frame */
 													win)

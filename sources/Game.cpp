@@ -76,18 +76,49 @@ Ennemy*				Game::get_ennemy_list(void) const
 /*************************     SETTERS      ***********************************/
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/
-
+typedef void		(Game::*rand_ennemy)(unsigned int);
 void				Game::generate_ennemy(void)
 {
-	Ennemy			*new_ennemy;
-	int				ennemies = rand() % MAX_ENEMIES_PER_TURN;
+	rand_ennemy		tab[] = {&Game::new_star_hunter,
+						 	&Game::new_crusader,
+						 	&Game::new_asteroid};
+	int				ennemies = rand() % MAX_ENEMIES_PER_TURN(this->_players[0]->get_level());
 	int				positions[ennemies];
 
+	std::cerr << "ennemies == " << ennemies << std::endl;
 	this->_nb_ennemy += ennemies;
 	for (int i = 0; i < ennemies; ++i)
 	{
 		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
-		new_ennemy = new Crusader(positions[i], this->_playground);
+		(this->*tab[rand() % 2])(positions[i]);
+	}
+}
+
+void				Game::new_star_hunter(unsigned int i)
+{
+	Ennemy			*new_ennemy;
+
+	new_ennemy = new StarHunter(i, this->_playground);
+	this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
+}
+
+
+void				Game::new_crusader(unsigned int i)
+{
+	Ennemy			*new_ennemy;
+
+	new_ennemy = new Crusader(i, this->_playground);
+	this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
+}
+
+
+void				Game::new_asteroid(unsigned int i)
+{
+	Ennemy			*new_ennemy;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		new_ennemy = new Asteroid(i, this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
 }
@@ -415,7 +446,7 @@ bool				Game::send_action(WINDOW *win)
 		c = wgetch(win);
 		switch(c) {
 			case KEY_UP:
-				highlight = highlight == 0 ? 3 : highlight - 1;
+				highlight = highlight == 0 ? 2 : highlight - 1;
 				break;
 			case KEY_DOWN:
 				highlight = (highlight + 1) % 3;
