@@ -88,7 +88,7 @@ void				Game::generate_ennemy(void)
 	{
 		fprintf(stderr, "nb ennemies == %d\n", this->_nb_ennemy);
 		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
-		new_ennemy = new StarHunter(positions[i], this->_playground);
+		new_ennemy = new Crusader(positions[i], this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
 }
@@ -243,7 +243,7 @@ Entity*			Game::move_entity_list(Entity* list, int const i)
 		Game::stock_pos(old_x, old_y, *ptr);
 		mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
 		ptr->move(1, 0);
-		if (ptr->current_position_on_board_is_ok() == false || this->_collision(i, ptr, old_x, old_y))
+		if (ptr->current_position_on_board_is_ok() == false || (this->_collision(i, ptr, old_x, old_y) && ptr->get_life() == 0))
 		{
 			next = ptr->get_next();
 			list = Entity::delete_one_entity_on_list(list, ptr);
