@@ -271,8 +271,13 @@ bool			Game::meet_bullets(Entity *entity, int old_x, int old_y)
 		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
 			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
 		{
-			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
-			this->_bullet_list = (Bullet*)Entity::delete_one_entity_on_list(this->_bullet_list, ptr);
+			ptr->take_damage(entity->get_damage_point());
+			entity->take_damage(ptr->get_damage_point());
+			if (ptr->get_life() == 0)
+			{
+				mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
+				this->_bullet_list = (Bullet*)Entity::delete_one_entity_on_list(this->_bullet_list, ptr);
+			}
 			return (true);
 		}
 		ptr = ptr->get_next();
@@ -296,8 +301,13 @@ bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y)
 		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
 			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
 		{
-			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
-			this->_ennemy_list = (Ennemy*)Entity::delete_one_entity_on_list(this->_ennemy_list, ptr);
+			ptr->take_damage(entity->get_damage_point());
+			entity->take_damage(ptr->get_damage_point());
+			if (ptr->get_life() == 0)
+			{
+				mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
+				this->_ennemy_list = (Ennemy*)Entity::delete_one_entity_on_list(this->_ennemy_list, ptr);
+			}
 			return (true);
 		}
 		ptr = ptr->get_next();
