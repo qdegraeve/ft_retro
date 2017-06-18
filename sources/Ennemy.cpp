@@ -50,13 +50,14 @@ unsigned int			Ennemy::get_shoot_frame(void) const
 
 unsigned int			Ennemy::get_nb_shoot(void) const
 {
-	return (this->_shoot_frame);
+	return (this->_nb_shoot);
 }
 
 /*************************     SETTERS      ***********************************/
 
 void				Ennemy::set_nb_shoot(unsigned int nb_shoot)
 {
+	std::cerr << "nb shoot " << nb_shoot << std::endl;
 	if (nb_shoot > this->_shoot_frame)
 		this->_nb_shoot = this->_shoot_frame;
 	else

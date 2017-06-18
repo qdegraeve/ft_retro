@@ -37,6 +37,7 @@ class Game
 		/* Player functions */
 		void				move_player();
 		void				player_shoot(Player const & player);
+		void				ennemies_shoot(void);
 
 		/* Bullets */
 		void				move_bullets(void);

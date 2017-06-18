@@ -85,7 +85,7 @@ void				Game::generate_ennemy(void)
 	{
 		fprintf(stderr, "nb ennemies == %d\n", this->_nb_ennemy);
 		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
-		new_ennemy = new Ennemy(positions[i], COLOR_BLUE | WA_BOLD, -1, 0, this->_playground);
+		new_ennemy = new Ennemy(positions[i], COLOR_BLUE | WA_BOLD, -1, 50, this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
 }
@@ -98,10 +98,33 @@ void				Game::player_shoot(Player const & player)
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 }
 
-// void				Game::ennemy_shoot(void)
-// {
+void				Game::ennemies_shoot(void)
+{
+	Ennemy			*ptr;
+	Bullet*			new_bullet;
 
-// }
+	ptr = this->_ennemy_list;
+	while (ptr)
+	{
+		if (ptr->get_shoot_frame() != 0)
+		{
+			if (ptr->get_nb_shoot() == 0)
+			{
+				std::cerr << "new bullet" << std::endl;
+				new_bullet = new Bullet(ptr->get_pos_x() - 2,
+										ptr->get_pos_y(),
+										-2,
+										COLOR_MAGENTA | WA_BOLD,
+										this->_playground);
+				this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
+				ptr->set_nb_shoot(ptr->get_shoot_frame());
+			}
+			else
+				ptr->set_nb_shoot(ptr->get_nb_shoot() - 1);
+		}
+		ptr = (Ennemy *)ptr->get_next();
+	}
+}
 
 int					Game::start_game(void) {
 	int		c = 0;
@@ -141,6 +164,7 @@ int					Game::start_game(void) {
 			break;
 		this->generate_ennemy();
 		this->move_ennemies();
+		this->ennemies_shoot();
 		this->move_bullets();
 		this->move_player(0, 0, 0);
 		clock = std::clock() - clock;
