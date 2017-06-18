@@ -7,10 +7,6 @@ Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE,
 													  COLS - (OUTSPACE * 2))),
 									_playground(*new Window(LINES - BEGIN_PG - WIN_SPACE,
 															BEGIN_PG, COLS - (OUTSPACE * 2))),
-									_level(1),
-									_score(0),
-									_nb_enemy_to_shoot(10),
-
 									_nb_players(nb_player > NB_MAX_PLAYER ?
 												NB_MAX_PLAYER : nb_player),
 									_nb_ennemy(0), _ennemy_list(NULL),
@@ -108,6 +104,7 @@ int					Game::start_game(void) {
 	clock_t	clock;
 
 	while (42) {
+		this->menu_window();
 		clock = std::clock();
 		if ((c = wgetch(this->_playground.get_win())) != 27) {
 			switch(c) {
@@ -145,6 +142,22 @@ int					Game::start_game(void) {
 			usleep(sleep - clock);
 	}
 	return (0);
+}
+
+void				Game::menu_window(void)
+{
+	std::stringstream		details;
+	std::string				details_str;
+
+	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() / 2, (this->_menu.get_cols() - sizeof("BIENVENUE")) / 2, "BIENVENUE");
+
+	details << "LEVEL : " << this->_players[0]->get_level()
+			<< ", SCORE : " << this->_players[0]->get_score()
+			// << ", NB ENEMY TO SHOOT : "
+			<< ", PLAYER LIFE : " << this->_players[0]->get_life();
+	details_str = details.str();
+	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 1, (this->_menu.get_cols() - details_str.length()) / 2, details_str.c_str());
+	wrefresh(this->_menu.get_win());
 }
 
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
@@ -216,7 +229,8 @@ bool				Game::_collision(int const i, Entity *entity, int old_x, int old_y)
 	{
 		if (j == i)
 			continue;
-		return (this->*tab[j])(entity, old_x, old_y);
+		if ((this->*tab[j])(entity, old_x, old_y))
+			return (true);
 	}
 	return (false);
 }

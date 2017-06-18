@@ -54,6 +54,7 @@ class Game
 		/* Play interface */
 		int				start_game(void);
 		bool			exit_game(int c);
+		void			menu_window(void);
 
 		/* Non member functions */
 		static void		stock_pos(int &x, int &y, Entity &ref);
@@ -74,9 +75,6 @@ class Game
 
 		bool				_collision(int const i, Entity *entity, int old_x, int old_y);
 
-		unsigned int		_level;
-		unsigned int		_score;
-		unsigned int		_nb_enemy_to_shoot;
 		unsigned int		_nb_players;
 		Player*				_players[NB_MAX_PLAYER];
 		unsigned int		_nb_ennemy;

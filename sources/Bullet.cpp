@@ -6,7 +6,7 @@
 Bullet::Bullet(unsigned int pos_x, unsigned int pos_y,
 				Window const & win) : Entity("Bullet", /* type */
 											1,		/* life max */
-											3,		/* damage point */
+											1,		/* damage point */
 											pos_x + 1,	/* pos x */
 											pos_y,	/* pos y */
 											'-',	/* character */

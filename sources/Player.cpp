@@ -13,6 +13,9 @@ Player::Player(Window const & win) : Entity("Player",
 								win)		/* speed */
 {
 	this->_name = "Player";
+	this->_level = 1;
+	this->_score = 0;
+	this->_nb_ennemy_to_shoot = 10;
 	return ;
 }
 
@@ -38,6 +41,9 @@ Player &	Player::operator=(Player const & rhs) {
 	{
 		(Entity)(*this) = (Entity)rhs;
 		this->_name = rhs.get_name();
+		this->_level = rhs.get_level();
+		this->_score = rhs.get_score();
+		this->_nb_ennemy_to_shoot = rhs.get_nb_ennemy_to_shoot();
 	}
 	return (*this);
 }
@@ -48,12 +54,36 @@ std::string	const	Player::get_name(void) const
 {
 	return (this->_name);
 }
+unsigned int		Player::get_level(void) const
+{
+	return (this->_level);
+}
+
+unsigned int		Player::get_score(void) const
+{
+	return (this->_score);
+}
+
+unsigned int		Player::get_nb_ennemy_to_shoot(void) const
+{
+	return (this->_nb_ennemy_to_shoot);
+}
 
 /*************************     SETTERS      ***********************************/
 
 void				Player::set_name(std::string const & name)
 {
 	this->_name = name;
+}
+
+void				Player::increase_score(unsigned int amount)
+{
+	this->_score += amount;
+}
+
+void				Player::increase_level(unsigned int amount)
+{
+	this->_level += amount;
 }
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/
