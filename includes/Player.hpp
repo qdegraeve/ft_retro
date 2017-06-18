@@ -20,6 +20,8 @@ public:
 	/* Setter */
 	void				set_name(std::string const & name);
 
+	virtual void		move(int x_move, int y_move);
+
 	protected:
 		std::string		_name;
 

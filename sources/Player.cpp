@@ -58,6 +58,20 @@ void				Player::set_name(std::string const & name)
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/
 
+void				Player::move(int x_move, int y_move)
+{
+	Entity::move(x_move, y_move);
+
+	if (this->_pos_y < 1)
+		this->_pos_y = 1;
+	if (this->_pos_x < 1)
+		this->_pos_x = 1;
+	if (this->_pos_y >= _win.get_lines())
+		this->_pos_y = _win.get_lines();
+	if (this->_pos_x >= _win.get_cols())
+		this->_pos_x = _win.get_cols();
+}
+
 /*************************     PRIVATE MEMBER FUNCTIONS     *******************/
 
 /*************************     NON MEMBER FUNTIONS     ************************/
