@@ -54,7 +54,6 @@ class Entity
 
 		/* List - Setters */
 		void				set_next(Entity* next);
-		Entity*				move_entity_list(Entity* list);
 
 		/* List - Functions */
 		static Entity*		set_entity_at_end(Entity* list, Entity* to_add);
@@ -64,6 +63,8 @@ class Entity
 		/* Others */
 		void				take_damage(unsigned int amount);
 		virtual void		move(int x_move, int y_move);
+
+		bool				current_position_on_board_is_ok(void);
 
 	protected:
 
@@ -78,8 +79,6 @@ class Entity
 
 			Window const &			_win;
 			Entity*					_next;
-
-			bool					_current_position_on_board_is_ok(void);
 
 	private:
 

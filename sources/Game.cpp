@@ -134,8 +134,8 @@ int					Game::start_game(void) {
 			break ;
 		}
 		this->generate_ennemy();
-		this->move_bullets();
 		this->move_ennemies();
+		this->move_bullets();
 		this->move_player(0, 0, 0);
 		usleep(100000);
 	}
@@ -147,14 +147,14 @@ int					Game::start_game(void) {
 void			Game::move_bullets(void)
 {
 	if (this->_bullet_list)
-		this->_bullet_list = (Bullet *)this->_bullet_list->move_entity_list(this->_bullet_list);
+		this->_bullet_list = (Bullet *)this->move_entity_list(this->_bullet_list, 1);
 	return ;
 }
 
 void			Game::move_ennemies(void)
 {
 	if (this->_ennemy_list)
-		this->_ennemy_list = (Ennemy *)this->_ennemy_list->move_entity_list(this->_ennemy_list);
+		this->_ennemy_list = (Ennemy *)this->move_entity_list(this->_ennemy_list, 0);
 	return ;
 }
 
@@ -164,10 +164,120 @@ void			Game::move_player(unsigned int index, int x, int y)
 
 	(void)old_y;
 	(void)old_x;
-	Game::stock_pos(old_x, old_y, *this->_players[0]);
+	Game::stock_pos(old_x, old_y, *this->_players[index]);
 	this->_players[index]->move(x, y);
+	this->_collision(2, this->_players[index], old_x, old_y, true);
 	// verif de la position
-	mvwaddch(this->_playground.get_win(), this->_players[0]->get_pos_y(), this->_players[0]->get_pos_x(), this->_players[0]->get_character());
+	mvwaddch(this->_playground.get_win(), this->_players[index]->get_pos_y(), this->_players[index]->get_pos_x(), this->_players[index]->get_character());
+}
+
+Entity*			Game::move_entity_list(Entity* list, int const i)
+{
+	Entity			*ptr = NULL;
+	Entity			*next = NULL;
+	int				old_x, old_y = 0;
+
+
+	ptr = list;
+	while (ptr)
+	{
+		Game::stock_pos(old_x, old_y, *ptr);
+		ptr->move(1, 0);
+		if (ptr->current_position_on_board_is_ok() == false || this->_collision(i, ptr, old_x, old_y, false))
+		{
+			next = ptr->get_next();
+			list = Entity::delete_one_entity_on_list(list, ptr);
+			ptr = next;
+		}
+		else
+		{
+			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ptr->get_character());
+			(void)old_y;
+			(void)old_x;
+			ptr = ptr->get_next();
+		}
+	}
+	return (list);
+}
+
+typedef bool		(Game::*ft_check)(Entity *, int old_x, int old_y, bool check_y);
+bool				Game::_collision(int const i, Entity *entity, int old_x, int old_y, bool check_y)
+{
+	ft_check	tab[] = {&Game::meet_ennemies,
+						 &Game::meet_bullets,
+						 &Game::meet_player};
+	for (int j = 0; j < 3; ++j)
+	{
+		if (j == i)
+			continue;
+		return (this->*tab[j])(entity, old_x, old_y, check_y);
+	}
+	return (false);
+}
+
+bool			Game::meet_player(Entity *entity, int old_x, int old_y, bool check_y)
+{
+	Entity *	ptr = NULL;
+	int			min_y, max_y = 0;
+	int			min_x, max_x = 0;
+
+	(void)check_y;
+	min_x = old_x > entity->get_pos_x() ? entity->get_pos_x() : old_x;
+	max_x = min_x != old_x ? old_x : entity->get_pos_x();
+	min_y = old_y > entity->get_pos_y() ? entity->get_pos_y() : old_y;
+	max_y = min_y != old_y ? old_y : entity->get_pos_y();
+	for (unsigned int i = 0; i < this->_nb_players; ++i)
+	{
+		ptr = this->_players[i];
+		if (min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x)
+			return (true);
+		ptr = ptr->get_next();
+	}
+	return (false);
+}
+
+bool			Game::meet_bullets(Entity *entity, int old_x, int old_y, bool check_y)
+{
+	Entity *	ptr = NULL;
+	int			min_y, max_y = 0;
+	int			min_x, max_x = 0;
+
+	min_x = old_x > entity->get_pos_x() ? entity->get_pos_x() : old_x;
+	max_x = min_x != old_x ? old_x : entity->get_pos_x();
+	min_y = old_y > entity->get_pos_y() ? entity->get_pos_y() : old_y;
+	max_y = min_y != old_y ? old_y : entity->get_pos_y();
+	ptr = this->_bullet_list;
+	while (ptr)
+	{
+		if (check_y && (min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y))
+			return (true);
+		if (min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x)
+			return (true);
+		ptr = ptr->get_next();
+	}
+	return (false);
+}
+
+bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y, bool check_y)
+{
+	Entity *	ptr = NULL;
+	int			min_y, max_y = 0;
+	int			min_x, max_x = 0;
+
+	min_x = old_x > entity->get_pos_x() ? entity->get_pos_x() : old_x;
+	max_x = min_x != old_x ? old_x : entity->get_pos_x();
+	min_y = old_y > entity->get_pos_y() ? entity->get_pos_y() : old_y;
+	max_y = min_y != old_y ? old_y : entity->get_pos_y();
+	ptr = this->_ennemy_list;
+	while (ptr)
+	{
+		if (check_y && (min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y))
+			return (true);
+		if (min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x)
+			return (true);
+		ptr = ptr->get_next();
+	}
+	return (false);
 }
 
 /*************************     NON MEMBER FUNTIONS     ************************/
