@@ -85,7 +85,6 @@ void				Game::generate_ennemy(void)
 	int				ennemies = (rand() % MAX_ENEMIES_PER_TURN(this->_players[0]->get_level())) + 1;
 	int				positions[ennemies];
 
-	std::cerr << "ennemies == " << ennemies << std::endl;
 	this->_nb_ennemy += ennemies;
 	for (int pos_y = 0; pos_y < ennemies; ++pos_y)
 	{
@@ -116,13 +115,10 @@ void				Game::new_asteroid(unsigned int pos_y)
 {
 	Ennemy			*new_ennemy;
 
-	std::cerr << "coucou :D size : " << this->_playground.get_cols() << std::endl;
 	for (int j = 1; j >= 0; j--)
 	{
-		std::cerr << "j : " << j << std::endl;
 		for (int x = 1; x >= 0; x--)
 		{
-			std::cerr << "x : " << x << std::endl;
 			new_ennemy = new Asteroid(x, pos_y - j, this->_playground);
 			this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 		}

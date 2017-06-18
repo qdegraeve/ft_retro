@@ -25,7 +25,6 @@ Entity::Entity(std::string type,
 								_win(win),
 								_next(NULL)
 {
-	std::cerr << "Entity constructor called" << std::endl;
 	return ;
 }
 
@@ -39,7 +38,6 @@ Entity::Entity(Entity const & src) : _win(src.get_win())
 
 Entity::~Entity()
 {
-	std::cerr << "Entity destructor called" << std::endl;
 	return ;
 }
 
@@ -260,7 +258,6 @@ bool				Entity::current_position_on_board_is_ok(void)
 {
 	if (this->_pos_y < 1 || this->_pos_x < 1)
 		return (false);
-	std::cerr <<" limit y : " << _win.get_lines() << "limit x : " <<  _win.get_cols() << std::endl;
 	if (this->_pos_y >= _win.get_lines() || this->_pos_x >= _win.get_cols())
 		return (false);
 	return (true);

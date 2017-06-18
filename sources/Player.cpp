@@ -31,14 +31,12 @@ Player::Player(Player const & src) : Entity(src)
 /*************************     DESTRUCTORS     ********************************/
 
 Player::~Player(void) {
-	std::cerr << "Player Destructor called" << std::endl;
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/
 
 Player &	Player::operator=(Player const & rhs) {
 
-	std::cerr << "Assignation operator called for Player" << std::endl;
 	if (this != &rhs)
 	{
 		(Entity)(*this) = (Entity)rhs;
@@ -80,7 +78,6 @@ void				Player::set_name(std::string const & name)
 
 void				Player::increase_score(unsigned int amount)
 {
-	std::cerr << "amount : " << amount << std::endl;
 	this->_score += amount;
 	this->_nb_ennemy_to_shoot -= 1;
 	if (this->_nb_ennemy_to_shoot == 0)
