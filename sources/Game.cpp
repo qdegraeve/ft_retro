@@ -106,6 +106,10 @@ int					Game::start_game(void) {
 	while (42) {
 		this->menu_window();
 		clock = std::clock();
+		if (this->players_alive() == false)
+		{
+			return (this->exit_game(-42));
+		}
 		if ((c = wgetch(this->_playground.get_win())) != 27) {
 			switch(c) {
 				case KEY_UP:
@@ -130,8 +134,6 @@ int					Game::start_game(void) {
 		}
 		if (this->exit_game(c) == 1)
 			break;
-		//werase(this->_playground.get_win());
-		//box(this->_playground.get_win(), 0, 0);
 		this->generate_ennemy();
 		this->move_ennemies();
 		this->move_bullets();
@@ -144,19 +146,22 @@ int					Game::start_game(void) {
 	return (0);
 }
 
+bool				Game::players_alive(void)
+{
+	for (unsigned int i = 0; i < this->_nb_players; ++i)
+	{
+		if (this->_players[i]->get_life() == 0)
+			return (false);
+	}
+	return (true);
+}
+
+#define SIZE_MENU sizeof("LEVEL :   , SCORE :         , PLAYER LIFE :    ")
+
 void				Game::menu_window(void)
 {
-	std::stringstream		details;
-	std::string				details_str;
-
 	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() / 2, (this->_menu.get_cols() - sizeof("BIENVENUE")) / 2, "BIENVENUE");
-
-	details << "LEVEL : " << this->_players[0]->get_level()
-			<< ", SCORE : " << this->_players[0]->get_score()
-			// << ", NB ENEMY TO SHOOT : "
-			<< ", PLAYER LIFE : " << this->_players[0]->get_life();
-	details_str = details.str();
-	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 1, (this->_menu.get_cols() - details_str.length()) / 2, details_str.c_str());
+	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 1, (this->_menu.get_cols() - SIZE_MENU) / 2, "LEVEL : %2u, PLAYER LIFE : %3u, SCORE : %8u", this->_players[0]->get_level(), this->_players[0]->get_life(), this->_players[0]->get_score());
 	wrefresh(this->_menu.get_win());
 }
 
@@ -323,7 +328,7 @@ bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y)
 bool		Game::exit_game(int c)
 {
 	bool	quit = false;
-	if (c == 27 || c == KEY_RESIZE)
+	if (c == 27 || c == KEY_RESIZE || c == -42)
 	{
 		Window		*pause = new Window(20, LINES / 2 - 20, 50);
 		mvwprintw(pause->get_win(), pause->get_lines() / 2, (pause->get_cols() - sizeof("JEU EN PAUSE")) / 2, "JEU EN PAUSE");

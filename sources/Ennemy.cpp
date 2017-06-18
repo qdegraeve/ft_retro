@@ -4,8 +4,8 @@
 /*************************     CONSTRUCTORS     *******************************/
 
 Ennemy::Ennemy(unsigned int pos_y, Window const &win) : Entity("Ennemy",
-											1,		/* life max */
-											1,		/* damage point */
+											2,		/* life max */
+											2,		/* damage point */
 											win.get_cols() - 1,		/* pos x */
 											pos_y,	/* pos y */
 											'e',	/* character */

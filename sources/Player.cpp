@@ -4,7 +4,7 @@
 /*************************     CONSTRUCTORS     *******************************/
 
 Player::Player(Window const & win) : Entity("Player",
-								100,	/* life max */
+								10,	/* life max */
 								10,		/* damage point */
 								(COLONNES / 2),	/* pos x */
 								LIGNES,		/* pos y */

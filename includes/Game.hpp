@@ -14,7 +14,7 @@
 # define PLAYGROUND_HEIGHT (LINES - BEGIN_PG - WIN_SPACE)
 # define MAX_ENEMIES_PER_TURN (PLAYGROUND_HEIGHT / 16)
 # define ENNEMY_SLOT_SIZE(x) (PLAYGROUND_HEIGHT / x)
-# define TARGET_SLEEP 40
+# define TARGET_SLEEP 20
 
 class Game
 {
@@ -55,6 +55,7 @@ class Game
 		int				start_game(void);
 		bool			exit_game(int c);
 		void			menu_window(void);
+		bool			players_alive(void);
 
 		/* Non member functions */
 		static void		stock_pos(int &x, int &y, Entity &ref);
