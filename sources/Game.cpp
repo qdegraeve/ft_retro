@@ -248,7 +248,8 @@ bool			Game::meet_player(Entity *entity, int old_x, int old_y)
 	for (unsigned int i = 0; i < this->_nb_players; ++i)
 	{
 		ptr = this->_players[i];
-		if (min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x)
+		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
+			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
 			return (true);
 		ptr = ptr->get_next();
 	}
