@@ -3,6 +3,7 @@
 
 # include <string>
 # include "Entity.hpp"
+# include "color.h"
 
 class Ennemy : public Entity
 {

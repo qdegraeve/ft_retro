@@ -12,7 +12,7 @@ Ennemy::Ennemy(unsigned int pos_y, int life_max, int damage_point,
 											pos_y,	/* pos y */
 											'e',	/* character */
 											speed,	/* speed */
-											color,	/* color */
+											color | WA_BOLD,	/* color */
 											false,	/* is ally */
 											win)
 {

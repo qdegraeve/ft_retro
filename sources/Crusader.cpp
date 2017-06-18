@@ -6,7 +6,7 @@ Crusader::Crusader(unsigned int pos_x,
 					Window const &win) : Ennemy(pos_x,
 												3,				/* life */
 												5,				/* damage */
-												COLOR_PAIR(0),	/* color */
+												COLOR_PAIR(FT_GREEN),	/* color */
 												-1,				/* speed */
 												200,			/* shoot frame */
 												win)
