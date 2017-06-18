@@ -22,6 +22,7 @@ class Entity
 				unsigned int pos_y,
 				unsigned char character,
 				int speed,
+				int color,
 				Window const & win);								/* constructor by default */
 		Entity(Entity const & src);						/* constructor by copy */
 		/* destructor */
@@ -39,6 +40,7 @@ class Entity
 		int					get_pos_y() const;
 		unsigned char		get_character() const;
 		int					get_speed() const;
+		int					get_color() const;
 		Entity*				get_next() const;
 		Window const &		get_win() const;
 
@@ -76,6 +78,7 @@ class Entity
 			int						_pos_y;
 			unsigned char			_character;
 			int						_speed;
+			int						_color;
 
 			Window const &			_win;
 			Entity*					_next;

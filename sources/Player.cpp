@@ -3,14 +3,15 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Player::Player(Window const & win) : Entity("Player",
+Player::Player(int color, Window const & win) : Entity("Player",
 								10,	/* life max */
 								10,		/* damage point */
 								(COLONNES / 2),	/* pos x */
 								LIGNES,		/* pos y */
 								'p',	/* character */
-								1,
-								win)		/* speed */
+								1,		/* speed */
+								color,
+								win)
 {
 	this->_name = "Player";
 	this->_level = 1;

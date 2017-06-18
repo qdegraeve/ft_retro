@@ -3,14 +3,15 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Ennemy::Ennemy(unsigned int pos_y, Window const &win) : Entity("Ennemy",
+Ennemy::Ennemy(unsigned int pos_y, int color, Window const &win) : Entity("Ennemy",
 											2,		/* life max */
 											2,		/* damage point */
 											win.get_cols() - 1,		/* pos x */
 											pos_y,	/* pos y */
 											'e',	/* character */
-											-1,
-											win)		/* speed */
+											-1,		/* speed */
+											color,	/* color */
+											win)
 {
 		fprintf(stderr, "constructeur , pos x == %d\n", this->_pos_x );
 

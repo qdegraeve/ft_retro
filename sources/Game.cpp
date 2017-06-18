@@ -14,7 +14,7 @@ Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE,
 {
 	srand(time(NULL));
 	for(unsigned int i=0; i < nb_player; i++)
-		this->_players[i] = new Player(this->_playground);
+		this->_players[i] = new Player(i + 1, this->_playground);
 	return ;
 }
 
@@ -85,7 +85,7 @@ void				Game::generate_ennemy(void)
 	{
 		fprintf(stderr, "nb ennemies == %d\n", this->_nb_ennemy);
 		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
-		new_ennemy = new Ennemy(positions[i], this->_playground);
+		new_ennemy = new Ennemy(positions[i], COLOR_BLUE | WA_BOLD, this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
 }
@@ -94,7 +94,7 @@ void				Game::player_shoot(Player const & player)
 {
 	Bullet*			new_bullet;
 
-	new_bullet = new Bullet(player.get_pos_x(), player.get_pos_y(), this->_playground);
+	new_bullet = new Bullet(player.get_pos_x(), player.get_pos_y(), COLOR_MAGENTA | WA_BOLD, this->_playground);
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 }
 
@@ -191,7 +191,10 @@ void			Game::move_player(unsigned int index, int x, int y)
 	this->_players[index]->move(x, y);
 	this->_collision(2, this->_players[index], old_x, old_y);
 	// verif de la position
-	mvwaddch(this->_playground.get_win(), this->_players[index]->get_pos_y(), this->_players[index]->get_pos_x(), this->_players[index]->get_character());
+	wattron(this->_playground.get_win(), this->_players[index]->get_color() | WA_BLINK);
+	mvwaddch(this->_playground.get_win(), this->_players[index]->get_pos_y(),
+			this->_players[index]->get_pos_x(), this->_players[index]->get_character());
+	wattroff(this->_playground.get_win(), this->_players[index]->get_color() | WA_BLINK);
 }
 
 Entity*			Game::move_entity_list(Entity* list, int const i)
