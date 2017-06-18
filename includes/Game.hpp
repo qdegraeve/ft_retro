@@ -42,6 +42,7 @@ class Game
 
 		/* Ennemy */
 		void				move_player(unsigned int index, int x, int y);
+		Entity*				move_entity_list(Entity* list, int const i);
 
 		Window const &	_menu;
 		Window const &	_playground;
@@ -54,6 +55,10 @@ class Game
 
 	protected:
 
+		bool			meet_ennemies(Entity *entity, int old_x, int old_y, bool check_y);
+		bool			meet_player(Entity *entity, int old_x, int old_y, bool check_y);
+		bool			meet_bullets(Entity *entity, int old_x, int old_y, bool check_y);
+
 		// checkCollision();
 		// Draw();
 
@@ -61,6 +66,8 @@ class Game
 
 		Game(void);								/* constructor by default */
 		Game & operator=(Game const & rhs);		/* overload operator = */
+
+		bool				_collision(int const i, Entity *entity, int old_x, int old_y, bool check_y);
 
 		unsigned int		_level;
 		unsigned int		_score;

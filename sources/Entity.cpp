@@ -157,35 +157,6 @@ void				Entity::set_next(Entity *next)
 
 /*************************    		STATIC		     *************************/
 
-Entity*				Entity::move_entity_list(Entity* list)
-{
-	Entity			*ptr = NULL;
-	Entity			*next = NULL;
-	int				old_x, old_y = 0;
-
-
-	ptr = list;
-	while (ptr)
-	{
-		Game::stock_pos(old_x, old_y, *ptr);
-		ptr->move(1, 0);
-		if (ptr->_current_position_on_board_is_ok() == false)
-		{
-			next = ptr->get_next();
-			list = Entity::delete_one_entity_on_list(list, ptr);
-			ptr = next;
-		}
-		else
-		{
-			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ptr->get_character());
-			(void)old_y;
-			(void)old_x;
-			ptr = ptr->get_next();
-		}
-	}
-	return (list);
-}
-
 Entity*				Entity::set_entity_at_end(Entity* list, Entity* to_add)
 {
 	Entity	*ptr = NULL;
@@ -270,9 +241,7 @@ void				Entity::move(int x_move, int y_move)
 	this->_pos_y += y_move;
 }
 
-/*************************    		PRIVATE		     *************************/
-
-bool				Entity::_current_position_on_board_is_ok(void)
+bool				Entity::current_position_on_board_is_ok(void)
 {
 	if (this->_pos_y < 1 || this->_pos_x < 1)
 		return (false);
@@ -280,3 +249,5 @@ bool				Entity::_current_position_on_board_is_ok(void)
 		return (false);
 	return (true);
 }
+
+/*************************    		PRIVATE		     *************************/
