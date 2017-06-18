@@ -136,11 +136,6 @@ int					Game::start_game(void) {
 	while (42) {
 		this->menu_window();
 		clock = std::clock();
-		if (this->players_alive() == false)
-		{
-			this->new_game();
-			this->new_game();
-		}
 		if ((c = wgetch(this->_playground.get_win())) != 27) {
 			switch(c) {
 				case KEY_UP:
@@ -193,14 +188,16 @@ bool				Game::players_alive(void)
 	return (true);
 }
 
-#define SIZE_MENU sizeof("LEVEL :   , SCORE :         , PLAYER LIFE :    ")
+#define SIZE_MENU sizeof("LEVEL :   , SCORE :         , TO KILL :    ")
+#define SIZE_LIFE sizeof("PLAYER LIFE :    ")
 
 void				Game::menu_window(void)
 {
 	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() / 2, (this->_menu.get_cols() - sizeof("BIENVENUE")) / 2, "BIENVENUE");
-	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 2, (this->_menu.get_cols() - SIZE_MENU) / 2, "LEVEL : %2u, PLAYER LIFE : %3u, SCORE : %8u", this->_players[0]->get_level(), this->_players[0]->get_life(), this->_players[0]->get_score());
-	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 1, (this->_menu.get_cols() - sizeof("TO KILL :    ")) / 2, "TO KILL : %3u", this->_players[0]->get_nb_ennemy_to_shoot());
-
+	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 2, (this->_menu.get_cols() - SIZE_MENU) / 2, "LEVEL : %2u, , SCORE : %8u, TO KILL : %3u", this->_players[0]->get_level(), this->_players[0]->get_score(), this->_players[0]->get_nb_ennemy_to_shoot());
+	wattron(this->_menu.get_win(), this->_players[0]->get_color() | WA_BOLD);
+	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 1, (this->_menu.get_cols() - SIZE_LIFE) / 2, "PLAYER LIFE : %3u",this->_players[0]->get_life());
+	wattroff(this->_menu.get_win(), this->_players[0]->get_color() | WA_BOLD);
 	wrefresh(this->_menu.get_win());
 }
 
@@ -209,7 +206,7 @@ void				Game::menu_window(void)
 void			Game::move_bullets(void)
 {
 	if (this->_bullet_list)
-		this->_bullet_list = (Bullet *)this->move_entity_list(this->_bullet_list, 1);
+		this->_bullet_list = (Bullet *)this->move_entity_list(this->_bullet_list, -1);
 	return ;
 }
 
@@ -252,7 +249,7 @@ Entity*			Game::move_entity_list(Entity* list, int const i)
 		if (ptr->current_position_on_board_is_ok() == false
 				|| ((collision = this->_collision(i, ptr, old_x, old_y)) && ptr->get_life() == 0))
 		{
-			if (ptr->get_is_ally() == false && ptr->get_type().compare("Bullet") != 0 && collision)
+			if (ptr->get_is_ally() == false && collision)
 				this->_players[0]->increase_score(ptr->get_damage_point());
 			next = ptr->get_next();
 			list = Entity::delete_one_entity_on_list(list, ptr);

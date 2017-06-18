@@ -87,6 +87,7 @@ void				Player::increase_score(unsigned int amount)
 	{
 		this->increase_level(1);
 		this->_nb_ennemy_to_shoot = this->_level * 10;
+		this->_life += 2;
 	}
 }
 
