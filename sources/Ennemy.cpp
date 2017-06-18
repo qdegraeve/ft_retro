@@ -3,22 +3,22 @@
 
 /*************************     CONSTRUCTORS     *******************************/
 
-Ennemy::Ennemy(unsigned int pos_x, Window const &win) : Entity("Ennemy",
+Ennemy::Ennemy(unsigned int pos_y, Window const &win) : Entity("Ennemy",
 											5,		/* life max */
 											10,		/* damage point */
-											pos_x,	/* pos x */
-											1,		/* pos y */
+											win.get_cols() - 1,		/* pos x */
+											pos_y,	/* pos y */
 											'e',	/* character */
 											-1,
 											win)		/* speed */
 {
-	std::cout << "Ennemy constructor called" << std::endl;
+		fprintf(stderr, "constructeur , pos x == %d\n", this->_pos_x );
+
 	return ;
 }
 
 Ennemy::Ennemy(Ennemy const & src) : Entity(src)
 {
-	std::cout << "Ennemy Copy constructor called" << std::endl;
 	*this = src;
 	return ;
 }
@@ -27,7 +27,7 @@ Ennemy::Ennemy(Ennemy const & src) : Entity(src)
 
 Ennemy::~Ennemy(void)
 {
-	std::cout << "Ennemy Destructor called" << std::endl;
+		fprintf(stderr, "-- Destructeur , pos x == %d\n", this->_pos_x );
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/

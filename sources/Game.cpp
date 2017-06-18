@@ -3,6 +3,10 @@
 #include <sstream>
 #include <time.h>
 
+# define PLAYGROUND_HEIGHT (LINES -BEGIN_PG -WIN_SPACE)
+# define MAX_ENEMIES_PER_TURN (PLAYGROUND_HEIGHT / 12)
+# define ENNEMY_SLOT_SIZE(x) (PLAYGROUND_HEIGHT / x)
+
 Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE)),
 									_playground(*new Window(LINES - BEGIN_PG - WIN_SPACE, BEGIN_PG)),
 									_level(1),
@@ -77,12 +81,15 @@ Ennemy*				Game::get_ennemy_list(void) const
 void				Game::generate_ennemy(void)
 {
 	Ennemy			*new_ennemy;
-	unsigned int	i;
+	int				ennemies = rand() % MAX_ENEMIES_PER_TURN;
+	int				positions[ennemies];
 
-	this->_nb_ennemy = rand() % this->_nb_enemy_to_shoot;
-	for (i = 0; i < this->_nb_ennemy; ++i)
+	this->_nb_ennemy += ennemies;
+	for (int i = 0; i < ennemies; ++i)
 	{
-		new_ennemy = new Ennemy(i, this->_playground);
+		fprintf(stderr, "nb ennemies == %d\n", this->_nb_ennemy);
+		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
+		new_ennemy = new Ennemy(positions[i], this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 	}
 }
@@ -119,9 +126,6 @@ int					Game::start_game(void) {
 					break;
 			}
 			flushinp();
-			if (this->_bullet_list)
-				mvwaddch(this->_playground.get_win(), this->_bullet_list->get_pos_y(), this->_bullet_list->get_pos_x(), this->_bullet_list->get_character());
-			this->move_bullets();
 		}
 		if (c == 27)
 			break ;
@@ -129,6 +133,10 @@ int					Game::start_game(void) {
 			std::cout << "Resize is forbidden" << std::endl;
 			break ;
 		}
+		this->generate_ennemy();
+		this->move_bullets();
+		this->move_ennemies();
+		this->move_player(0, 0, 0);
 		usleep(100000);
 	}
 	return (0);
