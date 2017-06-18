@@ -11,7 +11,7 @@ class Window {
 public:
 
 	Window(void);
-	Window(int const lines, int const begin);
+	Window(int const lines, int const begin, int const width);
 	Window(Window const & src);
 	~Window();
 

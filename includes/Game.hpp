@@ -7,10 +7,14 @@
 #include <iostream>
 #include <unistd.h>
 
-#define NB_MAX_PLAYER 1
-#define HEIGHT_MENU 10
-#define WIN_SPACE 2
-#define BEGIN_PG (HEIGHT_MENU + 4)
+# define NB_MAX_PLAYER 1
+# define HEIGHT_MENU 10
+# define WIN_SPACE 2
+# define BEGIN_PG (HEIGHT_MENU + 4)
+# define PLAYGROUND_HEIGHT (LINES - BEGIN_PG - WIN_SPACE)
+# define MAX_ENEMIES_PER_TURN (PLAYGROUND_HEIGHT / 16)
+# define ENNEMY_SLOT_SIZE(x) (PLAYGROUND_HEIGHT / x)
+# define TARGET_SLEEP 50
 
 class Game
 {
@@ -49,15 +53,16 @@ class Game
 
 		/* Play interface */
 		int				start_game(void);
+		bool			exit_game(int c);
 
 		/* Non member functions */
 		static void		stock_pos(int &x, int &y, Entity &ref);
 
 	protected:
 
-		bool			meet_ennemies(Entity *entity, int old_x, int old_y, bool check_y);
-		bool			meet_player(Entity *entity, int old_x, int old_y, bool check_y);
-		bool			meet_bullets(Entity *entity, int old_x, int old_y, bool check_y);
+		bool			meet_ennemies(Entity *entity, int old_x, int old_y);
+		bool			meet_player(Entity *entity, int old_x, int old_y);
+		bool			meet_bullets(Entity *entity, int old_x, int old_y);
 
 		// checkCollision();
 		// Draw();
@@ -67,7 +72,7 @@ class Game
 		Game(void);								/* constructor by default */
 		Game & operator=(Game const & rhs);		/* overload operator = */
 
-		bool				_collision(int const i, Entity *entity, int old_x, int old_y, bool check_y);
+		bool				_collision(int const i, Entity *entity, int old_x, int old_y);
 
 		unsigned int		_level;
 		unsigned int		_score;
