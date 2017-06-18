@@ -8,7 +8,7 @@ Player::Player(int color, Window const & win) : Entity("Player",
 								10,		/* damage point */
 								1,	/* pos x */
 								win.get_lines() / 2,		/* pos y */
-								'p',	/* character */
+								'D',	/* character */
 								1,		/* speed */
 								color,
 								true,	/* is ally */
@@ -80,6 +80,7 @@ void				Player::set_name(std::string const & name)
 
 void				Player::increase_score(unsigned int amount)
 {
+	std::cerr << "amount : " << amount << std::endl;
 	this->_score += amount;
 }
 

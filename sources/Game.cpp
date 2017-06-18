@@ -86,7 +86,6 @@ void				Game::generate_ennemy(void)
 	this->_nb_ennemy += ennemies;
 	for (int i = 0; i < ennemies; ++i)
 	{
-		fprintf(stderr, "nb ennemies == %d\n", this->_nb_ennemy);
 		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
 		new_ennemy = new Crusader(positions[i], this->_playground);
 		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
@@ -113,12 +112,11 @@ void				Game::ennemies_shoot(void)
 		{
 			if (ptr->get_nb_shoot() == 0)
 			{
-				std::cerr << "new bullet" << std::endl;
 				new_bullet = new Bullet(false,
 										ptr->get_pos_x() - 2,
 										ptr->get_pos_y(),
 										-2,
-										COLOR_PAIR(FT_GREEN),
+										COLOR_PAIR(FT_MAGENTA),
 										this->_playground);
 				this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 				ptr->set_nb_shoot(ptr->get_shoot_frame());
@@ -241,15 +239,19 @@ Entity*			Game::move_entity_list(Entity* list, int const i)
 	Entity			*ptr = NULL;
 	Entity			*next = NULL;
 	int				old_x, old_y = 0;
-
+	int				collision;
 
 	ptr = list;
 	while (ptr)
 	{
 		Game::stock_pos(old_x, old_y, *ptr);
 		ptr->move(1, 0);
-		if (ptr->current_position_on_board_is_ok() == false || (this->_collision(i, ptr, old_x, old_y) && ptr->get_life() == 0))
+		collision = false;
+		if (ptr->current_position_on_board_is_ok() == false
+				|| ((collision = this->_collision(i, ptr, old_x, old_y)) && ptr->get_life() == 0))
 		{
+			if (ptr->get_is_ally() == false && collision)
+				this->_players[0]->increase_score(ptr->get_damage_point());
 			next = ptr->get_next();
 			list = Entity::delete_one_entity_on_list(list, ptr);
 			ptr = next;
@@ -330,6 +332,8 @@ bool			Game::meet_bullets(Entity *entity, int old_x, int old_y)
 			entity->take_damage(ptr->get_damage_point());
 			if (ptr->get_life() == 0)
 			{
+				if (ptr->get_is_ally() == false)
+					this->_players[0]->increase_score(1);
 				mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
 				this->_bullet_list = (Bullet*)Entity::delete_one_entity_on_list(this->_bullet_list, ptr);
 			}
@@ -361,6 +365,8 @@ bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y)
 			entity->take_damage(ptr->get_damage_point());
 			if (ptr->get_life() == 0)
 			{
+				if (ptr->get_is_ally() == false)
+					this->_players[0]->increase_score(ptr->get_damage_point());
 				mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
 				this->_ennemy_list = (Ennemy*)Entity::delete_one_entity_on_list(this->_ennemy_list, ptr);
 			}

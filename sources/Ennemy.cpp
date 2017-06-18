@@ -10,7 +10,7 @@ Ennemy::Ennemy(unsigned int pos_y, int life_max, int damage_point,
 											damage_point,			/* damage point */
 											win.get_cols() - 1,		/* pos x */
 											pos_y,	/* pos y */
-											'e',	/* character */
+											'<',	/* character */
 											speed,	/* speed */
 											color | WA_BOLD,	/* color */
 											false,	/* is ally */
