@@ -3,12 +3,10 @@
 #include <sstream>
 #include <time.h>
 
-# define PLAYGROUND_HEIGHT (LINES -BEGIN_PG -WIN_SPACE)
-# define MAX_ENEMIES_PER_TURN (PLAYGROUND_HEIGHT / 12)
-# define ENNEMY_SLOT_SIZE(x) (PLAYGROUND_HEIGHT / x)
-
-Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE)),
-									_playground(*new Window(LINES - BEGIN_PG - WIN_SPACE, BEGIN_PG)),
+Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE, 
+													  COLS - (OUTSPACE * 2))),
+									_playground(*new Window(LINES - BEGIN_PG - WIN_SPACE, 
+															BEGIN_PG, COLS - (OUTSPACE * 2))),
 									_level(1),
 									_score(0),
 									_nb_enemy_to_shoot(10),
@@ -24,8 +22,10 @@ Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE)),
 	return ;
 }
 
-Game::Game(Game const & src) : _menu(*new Window(HEIGHT_MENU, WIN_SPACE)),
-								_playground(*new Window(LINES - BEGIN_PG, BEGIN_PG))
+Game::Game(Game const & src) : _menu(*new Window(HEIGHT_MENU, WIN_SPACE, 
+												COLS - (OUTSPACE * 2))),
+								_playground(*new Window(LINES - BEGIN_PG, 
+														BEGIN_PG, COLS - (OUTSPACE * 2)))
 {
 	*this = src;
 	return ;
@@ -103,8 +103,12 @@ void				Game::player_shoot(Player const & player)
 }
 
 int					Game::start_game(void) {
-	int c = 0;
+	int		c = 0;
+	float	sleep = 0.0f;
+	clock_t	clock;
+
 	while (42) {
+		clock = std::clock();
 		if ((c = wgetch(this->_playground.get_win())) != 27) {
 			switch(c) {
 				case KEY_UP:
@@ -127,17 +131,18 @@ int					Game::start_game(void) {
 			}
 			flushinp();
 		}
-		if (c == 27)
-			break ;
-		if (c == KEY_RESIZE) {
-			std::cout << "Resize is forbidden" << std::endl;
-			break ;
-		}
+		if (this->exit_game(c) == 1)
+			break;
+		werase(this->_playground.get_win());
+		box(this->_playground.get_win(), 0, 0);
 		this->generate_ennemy();
 		this->move_ennemies();
 		this->move_bullets();
 		this->move_player(0, 0, 0);
-		usleep(100000);
+		clock = std::clock() - clock;
+		sleep = 1 / (float)TARGET_SLEEP * 1000000;
+		if (sleep > clock)
+			usleep(sleep - clock);
 	}
 	return (0);
 }
@@ -166,7 +171,7 @@ void			Game::move_player(unsigned int index, int x, int y)
 	(void)old_x;
 	Game::stock_pos(old_x, old_y, *this->_players[index]);
 	this->_players[index]->move(x, y);
-	this->_collision(2, this->_players[index], old_x, old_y, true);
+	this->_collision(2, this->_players[index], old_x, old_y);
 	// verif de la position
 	mvwaddch(this->_playground.get_win(), this->_players[index]->get_pos_y(), this->_players[index]->get_pos_x(), this->_players[index]->get_character());
 }
@@ -182,8 +187,9 @@ Entity*			Game::move_entity_list(Entity* list, int const i)
 	while (ptr)
 	{
 		Game::stock_pos(old_x, old_y, *ptr);
+		mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
 		ptr->move(1, 0);
-		if (ptr->current_position_on_board_is_ok() == false || this->_collision(i, ptr, old_x, old_y, false))
+		if (ptr->current_position_on_board_is_ok() == false || this->_collision(i, ptr, old_x, old_y))
 		{
 			next = ptr->get_next();
 			list = Entity::delete_one_entity_on_list(list, ptr);
@@ -200,8 +206,8 @@ Entity*			Game::move_entity_list(Entity* list, int const i)
 	return (list);
 }
 
-typedef bool		(Game::*ft_check)(Entity *, int old_x, int old_y, bool check_y);
-bool				Game::_collision(int const i, Entity *entity, int old_x, int old_y, bool check_y)
+typedef bool		(Game::*ft_check)(Entity *, int old_x, int old_y);
+bool				Game::_collision(int const i, Entity *entity, int old_x, int old_y)
 {
 	ft_check	tab[] = {&Game::meet_ennemies,
 						 &Game::meet_bullets,
@@ -210,18 +216,17 @@ bool				Game::_collision(int const i, Entity *entity, int old_x, int old_y, bool
 	{
 		if (j == i)
 			continue;
-		return (this->*tab[j])(entity, old_x, old_y, check_y);
+		return (this->*tab[j])(entity, old_x, old_y);
 	}
 	return (false);
 }
 
-bool			Game::meet_player(Entity *entity, int old_x, int old_y, bool check_y)
+bool			Game::meet_player(Entity *entity, int old_x, int old_y)
 {
 	Entity *	ptr = NULL;
 	int			min_y, max_y = 0;
 	int			min_x, max_x = 0;
 
-	(void)check_y;
 	min_x = old_x > entity->get_pos_x() ? entity->get_pos_x() : old_x;
 	max_x = min_x != old_x ? old_x : entity->get_pos_x();
 	min_y = old_y > entity->get_pos_y() ? entity->get_pos_y() : old_y;
@@ -236,7 +241,7 @@ bool			Game::meet_player(Entity *entity, int old_x, int old_y, bool check_y)
 	return (false);
 }
 
-bool			Game::meet_bullets(Entity *entity, int old_x, int old_y, bool check_y)
+bool			Game::meet_bullets(Entity *entity, int old_x, int old_y)
 {
 	Entity *	ptr = NULL;
 	int			min_y, max_y = 0;
@@ -249,16 +254,19 @@ bool			Game::meet_bullets(Entity *entity, int old_x, int old_y, bool check_y)
 	ptr = this->_bullet_list;
 	while (ptr)
 	{
-		if (check_y && (min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y))
+		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) && 
+			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
+		{			
+			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
+			this->_bullet_list = (Bullet*)Entity::delete_one_entity_on_list(this->_bullet_list, ptr);
 			return (true);
-		if (min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x)
-			return (true);
+		}
 		ptr = ptr->get_next();
 	}
 	return (false);
 }
 
-bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y, bool check_y)
+bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y)
 {
 	Entity *	ptr = NULL;
 	int			min_y, max_y = 0;
@@ -271,13 +279,33 @@ bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y, bool check_y)
 	ptr = this->_ennemy_list;
 	while (ptr)
 	{
-		if (check_y && (min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y))
+		if ((min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
+			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
+		{
+			mvwaddch(ptr->get_win().get_win(), ptr->get_pos_y(), ptr->get_pos_x(), ' ');
+			this->_ennemy_list = (Ennemy*)Entity::delete_one_entity_on_list(this->_ennemy_list, ptr);
 			return (true);
-		if (min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x)
-			return (true);
+		}
 		ptr = ptr->get_next();
 	}
 	return (false);
+}
+
+bool		Game::exit_game(int c)
+{
+	bool	quit = false;
+	if (c == 27 || c == KEY_RESIZE)
+	{
+		Window		*pause = new Window(20, LINES / 2 - 20, 50);
+		mvwprintw(pause->get_win(), pause->get_lines() / 2, pause->get_cols() / 2 - 10, "JEU EN PAUSE");
+		nodelay(pause->get_win(), false);
+		keypad(pause->get_win(), TRUE);
+		c = wgetch(pause->get_win());
+		if (c == 27 || c == KEY_RESIZE)
+			quit = true;
+		delete(pause);
+	}
+	return (quit);
 }
 
 /*************************     NON MEMBER FUNTIONS     ************************/

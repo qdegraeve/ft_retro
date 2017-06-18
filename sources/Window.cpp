@@ -7,10 +7,10 @@ Window::Window(void) {
 	return ;
 }
 
-Window::Window(int const lines, int const begin)
-	: _win(newwin(lines, COLS - (OUTSPACE * 2), begin, OUTSPACE)),
+Window::Window(int const lines, int const begin, int const width)
+	: _win(newwin(lines, width, begin, (COLS - width) / 2)),
 	_lines(lines - 2),
-	_cols(COLS - (OUTSPACE * 2) - 2) {
+	_cols(width - 2) {
 	box(this->_win, 0, 0);
 	wrefresh(this->_win);
 	return ;
@@ -26,7 +26,6 @@ Window::Window(Window const & src) {
 /*************************     DESTRUCTORS     ********************************/
 
 Window::~Window(void) {
-	std::cout << "Destructor called" << std::endl;
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/
