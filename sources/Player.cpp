@@ -82,6 +82,12 @@ void				Player::increase_score(unsigned int amount)
 {
 	std::cerr << "amount : " << amount << std::endl;
 	this->_score += amount;
+	this->_nb_ennemy_to_shoot -= 1;
+	if (this->_nb_ennemy_to_shoot == 0)
+	{
+		this->increase_level(1);
+		this->_nb_ennemy_to_shoot = this->_level * 10;
+	}
 }
 
 void				Player::increase_level(unsigned int amount)

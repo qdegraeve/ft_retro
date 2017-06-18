@@ -198,7 +198,9 @@ bool				Game::players_alive(void)
 void				Game::menu_window(void)
 {
 	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() / 2, (this->_menu.get_cols() - sizeof("BIENVENUE")) / 2, "BIENVENUE");
-	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 1, (this->_menu.get_cols() - SIZE_MENU) / 2, "LEVEL : %2u, PLAYER LIFE : %3u, SCORE : %8u", this->_players[0]->get_level(), this->_players[0]->get_life(), this->_players[0]->get_score());
+	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 2, (this->_menu.get_cols() - SIZE_MENU) / 2, "LEVEL : %2u, PLAYER LIFE : %3u, SCORE : %8u", this->_players[0]->get_level(), this->_players[0]->get_life(), this->_players[0]->get_score());
+	mvwprintw(this->_menu.get_win(), this->_menu.get_lines() - 1, (this->_menu.get_cols() - sizeof("TO KILL :    ")) / 2, "TO KILL : %3u", this->_players[0]->get_nb_ennemy_to_shoot());
+
 	wrefresh(this->_menu.get_win());
 }
 
@@ -250,7 +252,7 @@ Entity*			Game::move_entity_list(Entity* list, int const i)
 		if (ptr->current_position_on_board_is_ok() == false
 				|| ((collision = this->_collision(i, ptr, old_x, old_y)) && ptr->get_life() == 0))
 		{
-			if (ptr->get_is_ally() == false && collision)
+			if (ptr->get_is_ally() == false && ptr->get_type().compare("Bullet") != 0 && collision)
 				this->_players[0]->increase_score(ptr->get_damage_point());
 			next = ptr->get_next();
 			list = Entity::delete_one_entity_on_list(list, ptr);
