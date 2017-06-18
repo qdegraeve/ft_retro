@@ -30,14 +30,14 @@ Player::Player(Player const & src) : Entity(src)
 /*************************     DESTRUCTORS     ********************************/
 
 Player::~Player(void) {
-	std::cout << "Player Destructor called" << std::endl;
+	std::cerr << "Player Destructor called" << std::endl;
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/
 
 Player &	Player::operator=(Player const & rhs) {
 
-	std::cout << "Assignation operator called for Player" << std::endl;
+	std::cerr << "Assignation operator called for Player" << std::endl;
 	if (this != &rhs)
 	{
 		(Entity)(*this) = (Entity)rhs;

@@ -30,14 +30,19 @@ Ennemy::Ennemy(Ennemy const & src) : Entity(src)
 
 Ennemy::~Ennemy(void)
 {
-		fprintf(stderr, "-- Destructeur , pos x == %d\n", this->_pos_x );
+	// fprintf(stderr, "-- Destructeur , pos x == %d\n", this->_pos_x );
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/
 
 Ennemy &	Ennemy::operator=(Ennemy const & rhs)
 {
-	(void)rhs;
+	if (this != &rhs)
+	{
+		(Entity)(*this) = (Entity)rhs;
+		this->_shoot_frame = rhs.get_shoot_frame();
+		this->_nb_shoot = rhs.get_nb_shoot();
+	}
 	return (*this);
 }
 
