@@ -31,7 +31,6 @@ Ennemy::Ennemy(Ennemy const & src) : Entity(src)
 
 Ennemy::~Ennemy(void)
 {
-	// fprintf(stderr, "-- Destructeur , pos x == %d\n", this->_pos_x );
 }
 
 /*************************     OPERATORS OVERLOAD     *************************/

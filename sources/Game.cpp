@@ -129,7 +129,9 @@ void				Game::player_shoot(Player const & player)
 {
 	Bullet*			new_bullet;
 
-	new_bullet = new Bullet(true, player.get_pos_x(), player.get_pos_y(), 2, COLOR_PAIR(FT_YELLOW), this->_playground);
+	new_bullet = new Bullet(true, player.get_pos_x(), player.get_pos_y(), 2,
+							COLOR_PAIR(FT_YELLOW), this->_players[0]->get_bullet_char(),
+							this->_players[0]->get_bullet_damage(), this->_playground);
 	this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 }
 
@@ -150,6 +152,8 @@ void				Game::ennemies_shoot(void)
 										ptr->get_pos_y(),
 										-2,
 										COLOR_PAIR(FT_MAGENTA),
+										'-',
+										1,
 										this->_playground);
 				this->_bullet_list = (Bullet *)Entity::set_entity_at_end(this->_bullet_list, new_bullet);
 				ptr->set_nb_shoot(ptr->get_shoot_frame());

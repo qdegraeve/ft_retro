@@ -4,13 +4,13 @@
 /*************************     CONSTRUCTORS     *******************************/
 
 Bullet::Bullet(bool is_ally, unsigned int pos_x, unsigned int pos_y,
-				int speed, int color,
+				int speed, int color, int character, unsigned int bullet_damage,
 				Window const & win) : Entity("Bullet", /* type */
 											1,		/* life max */
-											1,		/* damage point */
+											bullet_damage,		/* damage point */
 											pos_x + 1,	/* pos x */
 											pos_y,	/* pos y */
-											'-',	/* character */
+											character,	/* character */
 											speed,		/* speed */
 											color,	/* color */
 											is_ally,

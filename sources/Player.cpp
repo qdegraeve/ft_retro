@@ -1,6 +1,8 @@
 #include "Player.hpp"
 #include <iostream>
 
+# define PLAYER_LIFE_MAX 30
+
 /*************************     CONSTRUCTORS     *******************************/
 
 Player::Player(int color, Window const & win) : Entity("Player",
@@ -17,7 +19,9 @@ Player::Player(int color, Window const & win) : Entity("Player",
 	this->_name = "Player";
 	this->_level = 1;
 	this->_score = 0;
-	this->_nb_ennemy_to_shoot = 10;
+	this->_nb_ennemy_to_shoot = 5;
+	this->_bullet_char = '-';
+	this->_bullet_damage = 1;
 	return ;
 }
 
@@ -44,6 +48,8 @@ Player &	Player::operator=(Player const & rhs) {
 		this->_level = rhs.get_level();
 		this->_score = rhs.get_score();
 		this->_nb_ennemy_to_shoot = rhs.get_nb_ennemy_to_shoot();
+		this->_bullet_char = '-';
+		this->_bullet_damage = 1;
 	}
 	return (*this);
 }
@@ -69,6 +75,16 @@ unsigned int		Player::get_nb_ennemy_to_shoot(void) const
 	return (this->_nb_ennemy_to_shoot);
 }
 
+char				Player::get_bullet_char(void) const
+{
+	return (this->_bullet_char);
+}
+
+unsigned int		Player::get_bullet_damage(void) const
+{
+	return (this->_bullet_damage);
+}
+
 /*************************     SETTERS      ***********************************/
 
 void				Player::set_name(std::string const & name)
@@ -83,8 +99,30 @@ void				Player::increase_score(unsigned int amount)
 	if (this->_nb_ennemy_to_shoot == 0)
 	{
 		this->increase_level(1);
+		if (this->_level == 2)
+		{
+			this->_bullet_char = '=';
+			this->_bullet_damage += 1;
+		}
+		else if (this->_level == 4)
+		{
+			this->_bullet_char = ':';
+			this->_bullet_damage += 1;
 
-		this->_nb_ennemy_to_shoot = this->_level * 10;
+		}
+		else if (this->_level == 6)
+		{
+			this->_bullet_char = '*';
+			this->_bullet_damage += 1;
+		}
+		else if (this->_level == 8)
+		{
+			this->_bullet_char = '#';
+			this->_bullet_damage += 1;
+		}
+		else if (this->_level % 4 == 0)
+			this->_bullet_damage *= 2;
+		this->_nb_ennemy_to_shoot = this->_level * 5 + this->_level;
 		this->_life += 2;
 	}
 }
@@ -99,10 +137,11 @@ void				Player::reset_player()
 	this->_life = PLAYER_LIFE_MAX;
 	this->_level = 1;
 	this->_score = 0;
-	this->_nb_ennemy_to_shoot = 10;
+	this->_nb_ennemy_to_shoot = 5;
+	this->_bullet_char = '-';
+	this->_bullet_damage = 1;
 	this->_pos_x = 1;
 	this->_pos_y = this->_win.get_lines() / 2;
-
 }
 
 /*************************     PUBLIC MEMBER FUNCTIONS      *******************/

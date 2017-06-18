@@ -8,7 +8,8 @@ class Bullet : public Entity
 {
 	public:
 		Bullet(bool is_ally, unsigned int pos_x, unsigned int pos_y,
-				int speed, int color, Window const & win);
+				int speed, int color, int character,
+				unsigned int bullet_damage, Window const & win);
 		Bullet(Bullet const & src);
 		virtual ~Bullet();
 

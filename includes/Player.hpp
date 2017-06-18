@@ -4,7 +4,6 @@
 # include <string>
 # include "Entity.hpp"
 
-# define PLAYER_LIFE_MAX 10
 
 class Player : public Entity {
 
@@ -21,6 +20,8 @@ public:
 	unsigned int		get_level(void) const;
 	unsigned int		get_score(void) const;
 	unsigned int		get_nb_ennemy_to_shoot(void) const;
+	char				get_bullet_char(void) const;
+	unsigned int		get_bullet_damage(void) const;
 
 	/* Setter */
 	void				set_name(std::string const & name);
@@ -37,6 +38,8 @@ public:
 		unsigned int		_level;
 		unsigned int		_score;
 		unsigned int		_nb_ennemy_to_shoot;
+		char				_bullet_char;
+		unsigned int		_bullet_damage;
 
 };
 
