@@ -88,6 +88,7 @@ class Entity
 
 	private:
 
+		Entity(void);
 		int							_check_move(int current_pos, int move,
 										int pos_max, int pos_min) const;
 };

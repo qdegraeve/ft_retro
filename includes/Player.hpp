@@ -35,6 +35,8 @@ public:
 		std::string		_name;
 
 	private:
+		Player(void);
+
 		unsigned int		_level;
 		unsigned int		_score;
 		unsigned int		_nb_ennemy_to_shoot;
