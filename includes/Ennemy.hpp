@@ -15,6 +15,7 @@ class Ennemy : public Entity
 				int damage_point,
 				int color,
 				int speed,
+				char character,
 				unsigned int shoot_frame,
 				Window const & win);
 		Ennemy(Ennemy const & src);

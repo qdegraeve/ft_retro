@@ -82,44 +82,50 @@ void				Game::generate_ennemy(void)
 	rand_ennemy		tab[] = {&Game::new_star_hunter,
 						 	&Game::new_crusader,
 						 	&Game::new_asteroid};
-	int				ennemies = rand() % MAX_ENEMIES_PER_TURN(this->_players[0]->get_level());
+	int				ennemies = (rand() % MAX_ENEMIES_PER_TURN(this->_players[0]->get_level())) + 1;
 	int				positions[ennemies];
 
 	std::cerr << "ennemies == " << ennemies << std::endl;
 	this->_nb_ennemy += ennemies;
-	for (int i = 0; i < ennemies; ++i)
+	for (int pos_y = 0; pos_y < ennemies; ++pos_y)
 	{
-		positions[i] = (i * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
-		(this->*tab[rand() % 2])(positions[i]);
+		positions[pos_y] = (pos_y * ENNEMY_SLOT_SIZE(ennemies)) + (rand() % ENNEMY_SLOT_SIZE(ennemies));
+		(this->*tab[rand() % 3])(positions[pos_y]);
 	}
 }
 
-void				Game::new_star_hunter(unsigned int i)
+void				Game::new_star_hunter(unsigned int pos_y)
 {
 	Ennemy			*new_ennemy;
 
-	new_ennemy = new StarHunter(i, this->_playground);
+	new_ennemy = new StarHunter(pos_y, this->_playground);
 	this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 }
 
 
-void				Game::new_crusader(unsigned int i)
+void				Game::new_crusader(unsigned int pos_y)
 {
 	Ennemy			*new_ennemy;
 
-	new_ennemy = new Crusader(i, this->_playground);
+	new_ennemy = new Crusader(pos_y, this->_playground);
 	this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
 }
 
 
-void				Game::new_asteroid(unsigned int i)
+void				Game::new_asteroid(unsigned int pos_y)
 {
 	Ennemy			*new_ennemy;
 
-	for (int i = 0; i < 4; ++i)
+	std::cerr << "coucou :D size : " << this->_playground.get_cols() << std::endl;
+	for (int j = 1; j >= 0; j--)
 	{
-		new_ennemy = new Asteroid(i, this->_playground);
-		this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
+		std::cerr << "j : " << j << std::endl;
+		for (int x = 1; x >= 0; x--)
+		{
+			std::cerr << "x : " << x << std::endl;
+			new_ennemy = new Asteroid(x, pos_y - j, this->_playground);
+			this->_ennemy_list = (Ennemy *)Entity::set_entity_at_end(this->_ennemy_list, new_ennemy);
+		}
 	}
 }
 
@@ -163,6 +169,8 @@ int					Game::start_game(void) {
 	int		c = 0;
 	float	sleep = 0.0f;
 	clock_t	clock;
+	int		i = 0;
+	int		j;
 
 	while (42) {
 		this->menu_window();
@@ -196,7 +204,9 @@ int					Game::start_game(void) {
 			if (this->pause_menu())
 				break;
 		}
-		this->generate_ennemy();
+		j = this->_players[0]->get_level() >= 20 ? 1 : 20 - this->_players[0]->get_level();
+		if (i++ % j == 0)
+			this->generate_ennemy();
 		this->move_ennemies();
 		this->ennemies_shoot();
 		this->move_bullets();
@@ -237,7 +247,7 @@ void				Game::menu_window(void)
 void			Game::move_bullets(void)
 {
 	if (this->_bullet_list)
-		this->_bullet_list = (Bullet *)this->move_entity_list(this->_bullet_list, -1);
+		this->_bullet_list = (Bullet *)this->move_entity_list(this->_bullet_list, 1);
 	return ;
 }
 
@@ -354,6 +364,11 @@ bool			Game::meet_bullets(Entity *entity, int old_x, int old_y)
 	ptr = this->_bullet_list;
 	while (ptr)
 	{
+		if (entity == ptr)
+		{
+			ptr = ptr->get_next();
+			continue;
+		}
 		if (ptr->get_is_ally() != entity->get_is_ally() &&
 			(min_y <= ptr->get_pos_y() && ptr->get_pos_y() <= max_y) &&
 			(min_x <= ptr->get_pos_x() && ptr->get_pos_x() <= max_x))
@@ -416,6 +431,10 @@ bool		Game::pause_menu(void)
 	werase(pause->get_win());
 	wrefresh(pause->get_win());
 	delete(pause);
+	box(this->_playground.get_win(), 0, 0);
+	wrefresh(this->_playground.get_win());
+	box(this->_menu.get_win(), 0, 0);
+	wrefresh(this->_menu.get_win());
 	return (quit);
 }
 

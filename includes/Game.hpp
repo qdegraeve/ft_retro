@@ -16,7 +16,7 @@
 # define RATIO_MAX 60
 # define MAX_ENEMIES_PER_TURN(x) ((PLAYGROUND_HEIGHT / (RATIO_MAX - (2 * x)) + 2))
 # define ENNEMY_SLOT_SIZE(x) (PLAYGROUND_HEIGHT / x)
-# define TARGET_SLEEP 20
+# define TARGET_SLEEP 60
 # define PAUSE_MENU_WIDTH 50
 # define WRITE_CENTER(length) ((PAUSE_MENU_WIDTH - length) / 2)
 

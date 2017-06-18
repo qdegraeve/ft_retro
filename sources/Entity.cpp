@@ -228,6 +228,7 @@ Entity*				Entity::delete_one_entity_on_list(Entity* list, Entity* to_del)
 			else
 				prev->set_next(ptr->get_next());
 			delete ptr;
+			ptr = NULL;
 			break ;
 		}
 		prev = ptr;
@@ -259,6 +260,7 @@ bool				Entity::current_position_on_board_is_ok(void)
 {
 	if (this->_pos_y < 1 || this->_pos_x < 1)
 		return (false);
+	std::cerr <<" limit y : " << _win.get_lines() << "limit x : " <<  _win.get_cols() << std::endl;
 	if (this->_pos_y >= _win.get_lines() || this->_pos_x >= _win.get_cols())
 		return (false);
 	return (true);

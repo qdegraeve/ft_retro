@@ -8,6 +8,7 @@ Crusader::Crusader(unsigned int pos_x,
 												5,				/* damage */
 												COLOR_PAIR(FT_GREEN),	/* color */
 												-1,				/* speed */
+												'8',			/* char */
 												200,			/* shoot frame */
 												win)
 {

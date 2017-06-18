@@ -6,7 +6,7 @@
 class Asteroid : public Ennemy
 {
 	public:
-		Asteroid(unsigned int pos_y, Window const &win);	/* constructor by default */
+		Asteroid(unsigned int pos_x, unsigned int pos_y, Window const &win);	/* constructor by default */
 		Asteroid(Asteroid const & src);					/* constructor by copy */
 		~Asteroid();											/* destructor */
 

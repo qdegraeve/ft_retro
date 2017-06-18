@@ -4,13 +4,13 @@
 /*************************     CONSTRUCTORS     *******************************/
 
 Ennemy::Ennemy(unsigned int pos_y, int life_max, int damage_point,
-				int color, int speed, unsigned int shoot_frame,
+				int color, int speed, char character, unsigned int shoot_frame,
 				Window const &win) : Entity("Ennemy",
 											life_max,		/* life max */
 											damage_point,			/* damage point */
 											win.get_cols() - 1,		/* pos x */
 											pos_y,	/* pos y */
-											'<',	/* character */
+											character,	/* character */
 											speed,	/* speed */
 											color | WA_BOLD,	/* color */
 											false,	/* is ally */

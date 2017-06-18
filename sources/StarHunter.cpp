@@ -8,7 +8,8 @@ StarHunter::StarHunter(unsigned int pos_x,
 													1,				/* damage */
 													COLOR_PAIR(FT_BLUE),	/* color */
 													-1,				/* speed */
-													50,				/* shoot frame */
+													'<',			/* char */
+													150,				/* shoot frame */
 													win)
 {
 	return ;
