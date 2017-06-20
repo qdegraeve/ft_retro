@@ -9,8 +9,8 @@ Window::Window(void) {
 
 Window::Window(int const lines, int const begin, int const width)
 	: _win(newwin(lines, width, begin, (COLS - width) / 2)),
-	_lines(lines - 2),
-	_cols(width - 2) {
+	_lines(lines - 1),
+	_cols(width - 1) {
 	box(this->_win, 0, 0);
 	wrefresh(this->_win);
 	return ;

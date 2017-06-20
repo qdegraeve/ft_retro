@@ -155,7 +155,7 @@ void				Player::move(int x_move, int y_move)
 	if (this->_pos_x < 1)
 		this->_pos_x = 1;
 	if (this->_pos_y >= _win.get_lines())
-		this->_pos_y = _win.get_lines();
+		this->_pos_y = _win.get_lines() - 1;
 	if (this->_pos_x >= _win.get_cols())
 		this->_pos_x = _win.get_cols();
 }

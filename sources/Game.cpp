@@ -8,7 +8,7 @@
 
 Game::Game(unsigned int nb_player) :_menu(*new Window(HEIGHT_MENU, WIN_SPACE,
 													  COLS - (OUTSPACE * 2))),
-									_playground(*new Window(LINES - BEGIN_PG - WIN_SPACE,
+									_playground(*new Window(PLAYGROUND_HEIGHT,
 															BEGIN_PG, COLS - (OUTSPACE * 2))),
 									_nb_players(nb_player > NB_MAX_PLAYER ?
 												NB_MAX_PLAYER : nb_player),
@@ -424,7 +424,7 @@ bool			Game::meet_ennemies(Entity *entity, int old_x, int old_y)
 
 bool		Game::pause_menu(void)
 {
-	Window		*pause = new Window(20, LINES / 2 - 20, 50);
+	Window		*pause = new Window(20, std::max((LINES / 2) - 20, 10), 50);
 	bool		quit = false;
 	mvwprintw(pause->get_win(), 4, WRITE_CENTER(sizeof("JEU EN PAUSE")),  "JEU EN PAUSE");
 	quit = this->send_action(pause->get_win());
@@ -509,6 +509,7 @@ bool		Game::resume()
 
 bool		Game::exit_game()
 {
+	std::cerr << "Le redimensionnement n'est pas permis en cours de partie" << std::endl;
 	return (true);
 }
 
